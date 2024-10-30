@@ -12,6 +12,7 @@ from app.context import Info
 from app.database.paginator import PaginatedResult
 from app.questions.models import Answer, Question
 from app.questions.repositories import AnswerRepo
+from app.scalars import ID
 
 
 @strawberry.type(name="Answer")
@@ -77,6 +78,7 @@ class AnswerConnectionType(relay.Connection[AnswerType]):
 class QuestionType(BaseNodeType[Question]):
     title: str
     description: str
+    answers_count: int
     created_at: datetime
     updated_at: datetime | None
 
@@ -96,8 +98,8 @@ class QuestionType(BaseNodeType[Question]):
             AnswerRepo,
             Inject,
         ],
-        before: str | None = None,
-        after: str | None = None,
+        before: ID | None = None,
+        after: ID | None = None,
         first: int | None = None,
         last: int | None = None,
     ) -> AnswerConnectionType:
@@ -105,20 +107,8 @@ class QuestionType(BaseNodeType[Question]):
         # Retrieve paginated answers for this question
         paginated_answers = await answer_repo.get_all(
             question_id=self.id,
-            after=(
-                int(
-                    relay.from_base64(after)[1],
-                )
-                if after
-                else None
-            ),
-            before=(
-                int(
-                    relay.from_base64(before)[1],
-                )
-                if before
-                else None
-            ),
+            after=(int(after.node_id) if after else None),
+            before=(int(before.node_id) if before else None),
             first=first,
             last=last,
         )
@@ -133,6 +123,7 @@ class QuestionType(BaseNodeType[Question]):
             id=question.id,
             title=question.title,
             description=question.description,
+            answers_count=question.answers_count,
             created_at=question.created_at,
             updated_at=question.updated_at,
         )
@@ -171,6 +162,7 @@ DeleteQuestionPayload = Annotated[
 @strawberry.type
 class CreateAnswerPayload:
     answer_edge: relay.Edge[AnswerType]
+    question: QuestionType
 
 
 @strawberry.type(name="QuestionConnection")

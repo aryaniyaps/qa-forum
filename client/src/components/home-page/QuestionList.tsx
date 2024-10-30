@@ -11,7 +11,7 @@ const QuestionListFragment = graphql`
   fragment QuestionListFragment on Query
   @refetchable(queryName: "QuestionListPaginationQuery")
   @argumentDefinitions(
-    cursor: { type: "String" }
+    cursor: { type: "ID" }
     count: { type: "Int", defaultValue: 5 }
   ) {
     questions(after: $cursor, first: $count)
@@ -36,7 +36,10 @@ type Props = {
 
 export default function QuestionList({ rootQuery }: Props) {
   const [isPending, startTransition] = useTransition();
-  const { data, loadNext } = usePaginationFragment(QuestionListFragment, rootQuery);
+  const { data, loadNext } = usePaginationFragment(
+    QuestionListFragment,
+    rootQuery
+  );
 
   function loadMore() {
     return startTransition(() => {
@@ -44,7 +47,10 @@ export default function QuestionList({ rootQuery }: Props) {
     });
   }
 
-  if (data.questions.edges.length === 0 && !data.questions.pageInfo.hasNextPage) {
+  if (
+    data.questions.edges.length === 0 &&
+    !data.questions.pageInfo.hasNextPage
+  ) {
     return (
       <div className="flex grow flex-col gap-4 px-4 items-center h-full">
         <p className="font-medium text-muted-foreground">
@@ -55,7 +61,7 @@ export default function QuestionList({ rootQuery }: Props) {
   }
 
   return (
-    <ScrollArea className="flex grow w-full flex-col gap-4 px-4">
+    <ScrollArea className="w-full">
       {data.questions.edges.map((questionEdge) => {
         return (
           <Question

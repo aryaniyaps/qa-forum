@@ -17,7 +17,7 @@ import { QuestionControllerFragment$key } from "./__generated__/QuestionControll
 const QuestionControllerFragment = graphql`
   fragment QuestionControllerFragment on Query
   @argumentDefinitions(
-    cursor: { type: "String" }
+    cursor: { type: "ID" }
     count: { type: "Int", defaultValue: 5 }
   ) {
     questions(after: $cursor, first: $count)
@@ -92,7 +92,7 @@ export default function QuestionController({ rootQuery }: Props) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-4 w-full px-4"
+        className="flex flex-col gap-4 w-full"
       >
         <FormField
           control={form.control}
@@ -101,7 +101,7 @@ export default function QuestionController({ rootQuery }: Props) {
             <FormItem>
               <FormControl>
                 <Input
-                  placeholder="ask your question..."
+                  placeholder="your question title..."
                   className="resize-none"
                   {...field}
                 />

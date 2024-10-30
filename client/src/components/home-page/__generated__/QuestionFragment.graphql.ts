@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1e6662302c32565ec6beabb5cd5d676b>>
+ * @generated SignedSource<<91039c2856437adae027c877b3cab3f5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type QuestionFragment$data = {
+  readonly answersCount: number;
   readonly createdAt: any;
   readonly descriptionPreview: string;
   readonly id: string;
@@ -54,6 +55,13 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "answersCount",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "createdAt",
       "storageKey": null
     },
@@ -69,6 +77,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "a0c4f405e075a26c514d58c11c4e79fa";
+(node as any).hash = "5a8f8cd3506c94b0cbe8f1c9c6390d01";
 
 export default node;

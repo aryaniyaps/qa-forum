@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<543d388edcf00023220ad55ae61711d7>>
+ * @generated SignedSource<<39dae223a2e69c2330b511974609a341>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -110,6 +110,13 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "answersCount",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "createdAt",
                     "storageKey": null
                   },
@@ -187,12 +194,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fe3f5c189d3863aced48b75366ddff0b",
+    "cacheID": "7138b7baee08b884c04dab36ece1d404",
     "id": null,
     "metadata": {},
     "name": "HomePageQuery",
     "operationKind": "query",
-    "text": "query HomePageQuery {\n  ...QuestionListFragment\n  ...QuestionControllerFragment\n}\n\nfragment QuestionControllerFragment on Query {\n  questions(first: 5) {\n    edges {\n      __typename\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment QuestionFragment on Question {\n  id\n  title\n  descriptionPreview\n  createdAt\n  updatedAt\n}\n\nfragment QuestionListFragment on Query {\n  questions(first: 5) {\n    edges {\n      node {\n        id\n        ...QuestionFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
+    "text": "query HomePageQuery {\n  ...QuestionListFragment\n  ...QuestionControllerFragment\n}\n\nfragment QuestionControllerFragment on Query {\n  questions(first: 5) {\n    edges {\n      __typename\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment QuestionFragment on Question {\n  id\n  title\n  descriptionPreview\n  answersCount\n  createdAt\n  updatedAt\n}\n\nfragment QuestionListFragment on Query {\n  questions(first: 5) {\n    edges {\n      node {\n        id\n        ...QuestionFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
   }
 };
 })();

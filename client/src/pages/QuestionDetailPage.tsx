@@ -1,4 +1,5 @@
 import AnswerController from "@/components/question-detail/AnswerController";
+import AnswerCount from "@/components/question-detail/AnswerCount";
 import AnswerList from "@/components/question-detail/AnswerList";
 import QuestionDetails from "@/components/question-detail/QuestionDetails";
 import { Separator } from "@/components/ui/separator";
@@ -12,6 +13,7 @@ const QuestionDetailPageQuery = graphql`
     node(id: $questionId) {
       __typename
       ... on Question {
+        ...AnswerCountFragment
         ...AnswerListFragment
         ...AnswerControllerFragment
         ...QuestionDetailsFragment
@@ -34,6 +36,7 @@ export default function QuestionDetailPage() {
           <>
             <QuestionDetails question={data.node} />
             <Separator />
+            <AnswerCount question={data.node} />
             <AnswerList question={data.node} />
             <AnswerController question={data.node} />
           </>

@@ -25,6 +25,7 @@ type AnswerEdge {
 
 type CreateAnswerPayload {
   answerEdge: AnswerEdge!
+  question: Question!
 }
 
 type CreateQuestionPayload {
@@ -94,7 +95,7 @@ type Query {
   ): Node
 
   """Get all questions available."""
-  questions(before: String = null, after: String = null, first: Int = null, last: Int = null): QuestionConnection!
+  questions(before: ID = null, after: ID = null, first: Int = null, last: Int = null): QuestionConnection!
 }
 
 type Question implements Node {
@@ -102,10 +103,11 @@ type Question implements Node {
   id: ID!
   title: String!
   description: String!
+  answersCount: Int!
   createdAt: DateTime!
   updatedAt: DateTime
   descriptionPreview: String!
-  answers(before: String = null, after: String = null, first: Int = null, last: Int = null): AnswerConnection!
+  answers(before: ID = null, after: ID = null, first: Int = null, last: Int = null): AnswerConnection!
 }
 
 type QuestionConnection {

@@ -14,7 +14,7 @@ class QuestionRepo:
         """Create a new question."""
         question = Question(title=title, description=description)
         self._session.add(question)
-        await self._session.flush()
+        await self._session.commit()
         return question
 
     async def get(self, question_id: int) -> Question | None:
@@ -84,7 +84,7 @@ class AnswerRepo:
         """Create a new answer."""
         answer = Answer(question_id=question_id, content=content)
         self._session.add(answer)
-        await self._session.flush()
+        await self._session.commit()
         return answer
 
     async def get(self, answer_id: int) -> Answer | None:

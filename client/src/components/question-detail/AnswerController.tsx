@@ -16,7 +16,7 @@ import { AnswerControllerFragment$key } from "./__generated__/AnswerControllerFr
 const AnswerControllerFragment = graphql`
   fragment AnswerControllerFragment on Question
   @argumentDefinitions(
-    cursor: { type: "String" }
+    cursor: { type: "ID" }
     count: { type: "Int", defaultValue: 5 }
   ) {
     id
@@ -39,6 +39,9 @@ const AnswerControllerCreateMutation = graphql`
     $connections: [ID!]!
   ) {
     createAnswer(content: $content, questionId: $questionId) {
+      question {
+        ...QuestionFragment
+      }
       answerEdge @prependEdge(connections: $connections) {
         node {
           ...AnswerFragment

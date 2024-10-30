@@ -4,7 +4,7 @@ import strawberry
 from aioinject import Inject
 from aioinject.ext.strawberry import inject
 from result import Err
-from strawberry import relay
+from strawberry import Info, relay
 
 from app.scalars import ID
 
@@ -91,6 +91,7 @@ class QuestionMutation:
     @inject
     async def create_answer(
         self,
+        info: Info,
         content: Annotated[
             str,
             strawberry.argument(
@@ -113,9 +114,14 @@ class QuestionMutation:
 
         answer = result.unwrap()
 
+        question = await question_id.resolve_node(info)
+
+        print(question)
+
         return CreateAnswerPayload(
             answer_edge=relay.Edge(
                 node=AnswerType.from_orm(answer),
                 cursor=relay.to_base64(AnswerType, answer.id),
             ),
+            question=question,
         )

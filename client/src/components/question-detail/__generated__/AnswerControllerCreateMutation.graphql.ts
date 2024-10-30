@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<682953961f435e3762e5b9fc85a1d894>>
+ * @generated SignedSource<<b813d212c453f12d21a2700af478ca7d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,9 @@ export type AnswerControllerCreateMutation$data = {
       readonly node: {
         readonly " $fragmentSpreads": FragmentRefs<"AnswerFragment">;
       };
+    };
+    readonly question: {
+      readonly " $fragmentSpreads": FragmentRefs<"QuestionFragment">;
     };
   };
 };
@@ -56,7 +59,28 @@ v3 = [
     "name": "questionId",
     "variableName": "questionId"
   }
-];
+],
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "createdAt",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "updatedAt",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [
@@ -76,6 +100,22 @@ return {
         "name": "createAnswer",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Question",
+            "kind": "LinkedField",
+            "name": "question",
+            "plural": false,
+            "selections": [
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "QuestionFragment"
+              }
+            ],
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -131,6 +171,41 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "Question",
+            "kind": "LinkedField",
+            "name": "question",
+            "plural": false,
+            "selections": [
+              (v4/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "title",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "descriptionPreview",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "answersCount",
+                "storageKey": null
+              },
+              (v5/*: any*/),
+              (v6/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "AnswerEdge",
             "kind": "LinkedField",
             "name": "answerEdge",
@@ -144,13 +219,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "id",
-                    "storageKey": null
-                  },
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -158,20 +227,8 @@ return {
                     "name": "content",
                     "storageKey": null
                   },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "createdAt",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "updatedAt",
-                    "storageKey": null
-                  }
+                  (v5/*: any*/),
+                  (v6/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -200,16 +257,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "75dbb14bc9a2a51e4fd8b13260be159c",
+    "cacheID": "b51b49f0452a787319ac542f16c925c4",
     "id": null,
     "metadata": {},
     "name": "AnswerControllerCreateMutation",
     "operationKind": "mutation",
-    "text": "mutation AnswerControllerCreateMutation(\n  $content: String!\n  $questionId: ID!\n) {\n  createAnswer(content: $content, questionId: $questionId) {\n    answerEdge {\n      node {\n        ...AnswerFragment\n        id\n      }\n    }\n  }\n}\n\nfragment AnswerFragment on Answer {\n  id\n  content\n  createdAt\n  updatedAt\n}\n"
+    "text": "mutation AnswerControllerCreateMutation(\n  $content: String!\n  $questionId: ID!\n) {\n  createAnswer(content: $content, questionId: $questionId) {\n    question {\n      ...QuestionFragment\n      id\n    }\n    answerEdge {\n      node {\n        ...AnswerFragment\n        id\n      }\n    }\n  }\n}\n\nfragment AnswerFragment on Answer {\n  id\n  content\n  createdAt\n  updatedAt\n}\n\nfragment QuestionFragment on Question {\n  id\n  title\n  descriptionPreview\n  answersCount\n  createdAt\n  updatedAt\n}\n"
   }
 };
 })();
 
-(node as any).hash = "647faf0292d4ad62ec2d4e7482fe8cbf";
+(node as any).hash = "5860ef226ef66813f75db6496951b13b";
 
 export default node;

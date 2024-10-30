@@ -11,7 +11,7 @@ const AnswerListFragment = graphql`
   fragment AnswerListFragment on Question
   @refetchable(queryName: "AnswerListPaginationQuery")
   @argumentDefinitions(
-    cursor: { type: "String" }
+    cursor: { type: "ID" }
     count: { type: "Int", defaultValue: 5 }
   ) {
     answers(after: $cursor, first: $count)

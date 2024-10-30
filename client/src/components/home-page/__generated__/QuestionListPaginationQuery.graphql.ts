@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c60f154f62d806c8af224570b92c27ee>>
+ * @generated SignedSource<<9be459c9753e7ec8020e698ec19bc213>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -129,6 +129,13 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "answersCount",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "createdAt",
                     "storageKey": null
                   },
@@ -211,16 +218,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "027e0c5c80471ead5dbac520d34f7079",
+    "cacheID": "0c92bcdc59197a67a2bf10f83eb73fd0",
     "id": null,
     "metadata": {},
     "name": "QuestionListPaginationQuery",
     "operationKind": "query",
-    "text": "query QuestionListPaginationQuery(\n  $count: Int = 5\n  $cursor: String\n) {\n  ...QuestionListFragment_1G22uz\n}\n\nfragment QuestionFragment on Question {\n  id\n  title\n  descriptionPreview\n  createdAt\n  updatedAt\n}\n\nfragment QuestionListFragment_1G22uz on Query {\n  questions(after: $cursor, first: $count) {\n    edges {\n      node {\n        id\n        ...QuestionFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
+    "text": "query QuestionListPaginationQuery(\n  $count: Int = 5\n  $cursor: ID\n) {\n  ...QuestionListFragment_1G22uz\n}\n\nfragment QuestionFragment on Question {\n  id\n  title\n  descriptionPreview\n  answersCount\n  createdAt\n  updatedAt\n}\n\nfragment QuestionListFragment_1G22uz on Query {\n  questions(after: $cursor, first: $count) {\n    edges {\n      node {\n        id\n        ...QuestionFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "8af1ea9833443881ecf16254e7d4ae53";
+(node as any).hash = "f8d8c7b10a7836c83e26a2936fcdd067";
 
 export default node;

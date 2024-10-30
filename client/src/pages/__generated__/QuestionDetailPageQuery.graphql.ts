@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d785017d66c00327bde3f9ea606e40b2>>
+ * @generated SignedSource<<d903d263ccf1bfd13492c8942c12f140>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type QuestionDetailPageQuery$variables = {
 export type QuestionDetailPageQuery$data = {
   readonly node: {
     readonly __typename: "Question";
-    readonly " $fragmentSpreads": FragmentRefs<"AnswerControllerFragment" | "AnswerListFragment" | "QuestionDetailsFragment">;
+    readonly " $fragmentSpreads": FragmentRefs<"AnswerControllerFragment" | "AnswerCountFragment" | "AnswerListFragment" | "QuestionDetailsFragment">;
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
@@ -93,6 +93,11 @@ return {
               {
                 "args": null,
                 "kind": "FragmentSpread",
+                "name": "AnswerCountFragment"
+              },
+              {
+                "args": null,
+                "kind": "FragmentSpread",
                 "name": "AnswerListFragment"
               },
               {
@@ -135,6 +140,13 @@ return {
           {
             "kind": "InlineFragment",
             "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "answersCount",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": (v4/*: any*/),
@@ -264,16 +276,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "437cc0dd2f1a693a3e929014e6cf1953",
+    "cacheID": "4ebb6ac0c42597c5eea6bde7c0c72534",
     "id": null,
     "metadata": {},
     "name": "QuestionDetailPageQuery",
     "operationKind": "query",
-    "text": "query QuestionDetailPageQuery(\n  $questionId: ID!\n) {\n  node(id: $questionId) {\n    __typename\n    ... on Question {\n      ...AnswerListFragment\n      ...AnswerControllerFragment\n      ...QuestionDetailsFragment\n    }\n    id\n  }\n}\n\nfragment AnswerControllerFragment on Question {\n  id\n  answers(first: 5) {\n    edges {\n      __typename\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment AnswerFragment on Answer {\n  id\n  content\n  createdAt\n  updatedAt\n}\n\nfragment AnswerListFragment on Question {\n  answers(first: 5) {\n    edges {\n      node {\n        id\n        ...AnswerFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n  id\n}\n\nfragment QuestionDetailsFragment on Question {\n  id\n  title\n  description\n  createdAt\n}\n"
+    "text": "query QuestionDetailPageQuery(\n  $questionId: ID!\n) {\n  node(id: $questionId) {\n    __typename\n    ... on Question {\n      ...AnswerCountFragment\n      ...AnswerListFragment\n      ...AnswerControllerFragment\n      ...QuestionDetailsFragment\n    }\n    id\n  }\n}\n\nfragment AnswerControllerFragment on Question {\n  id\n  answers(first: 5) {\n    edges {\n      __typename\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment AnswerCountFragment on Question {\n  answersCount\n}\n\nfragment AnswerFragment on Answer {\n  id\n  content\n  createdAt\n  updatedAt\n}\n\nfragment AnswerListFragment on Question {\n  answers(first: 5) {\n    edges {\n      node {\n        id\n        ...AnswerFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n  id\n}\n\nfragment QuestionDetailsFragment on Question {\n  id\n  title\n  description\n  createdAt\n}\n"
   }
 };
 })();
 
-(node as any).hash = "6925ee4f3590868143ed2cb4fc2576c9";
+(node as any).hash = "7d54f97bf0e33e375541125832da4303";
 
 export default node;

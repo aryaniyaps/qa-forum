@@ -16,6 +16,7 @@ export const QuestionFragment = graphql`
     id
     title
     descriptionPreview
+    answersCount
     createdAt
     updatedAt
   }
@@ -38,7 +39,10 @@ export default function Question({ question }: Props) {
           </CardTitle>
           <CardDescription>{data.descriptionPreview}</CardDescription>
         </CardHeader>
-        <CardFooter className="flex">
+        <CardFooter className="flex justify-between">
+          <p className="text-xs text-muted-foreground">
+            {data.answersCount} answers
+          </p>
           <p className="text-xs text-muted-foreground">
             created at {dtf.format(new Date(data.createdAt))}
           </p>
