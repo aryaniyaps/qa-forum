@@ -10,8 +10,9 @@ from strawberry import relay
 from app.base.types import BaseErrorType, BaseNodeType
 from app.context import Info
 from app.database.paginator import PaginatedResult
+from app.lib.constants import VoteType
 from app.questions.models import Answer, Question
-from app.questions.repositories import AnswerRepo
+from app.questions.repositories import AnswerRepo, QuestionVoteRepo
 from app.scalars import ID
 
 
@@ -90,6 +91,27 @@ class QuestionType(BaseNodeType[Question]):
             return self.description
         return self.description[:65] + "..."
 
+    @strawberry.field(
+        graphql_type=VoteType | None,
+    )
+    @inject
+    async def current_user_vote(
+        self,
+        info: Info,
+        question_vote_repo: Annotated[
+            QuestionVoteRepo,
+            Inject,
+        ],
+    ) -> VoteType | None:
+        """The vote of the current user for this question."""
+        existing_vote = await question_vote_repo.get(
+            question_id=self.id,
+            user_id=info.context.user_id,
+        )
+        if not existing_vote:
+            return None
+        return existing_vote.vote_type
+
     @strawberry.field
     @inject
     async def answers(
@@ -164,6 +186,16 @@ DeleteQuestionPayload = Annotated[
 @strawberry.type
 class CreateAnswerPayload:
     answer_edge: relay.Edge[AnswerType]
+    question: QuestionType
+
+
+@strawberry.type
+class VoteQuestionPayload:
+    question: QuestionType
+
+
+@strawberry.type
+class DeleteQuestionVotePayload:
     question: QuestionType
 
 

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4764521356022bcb5ffca896d8ab56ff>>
+ * @generated SignedSource<<66cadc3b10249315e419a1dc7b5a7164>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,9 +9,11 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type VoteType = "DOWNVOTE" | "UPVOTE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type QuestionDetailsFragment$data = {
   readonly createdAt: any;
+  readonly currentUserVote: VoteType | null | undefined;
   readonly description: string;
   readonly id: string;
   readonly title: string;
@@ -61,6 +63,13 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "currentUserVote",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "createdAt",
       "storageKey": null
     }
@@ -69,6 +78,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "802fd4bb854ad85d0fa1fea039c1781e";
+(node as any).hash = "d2c9d1d8579ba4c81a6ed0fad21d8180";
 
 export default node;

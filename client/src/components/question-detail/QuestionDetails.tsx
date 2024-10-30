@@ -1,6 +1,6 @@
 import { dtf } from "@/lib/intl";
 import { ChevronDown, ChevronUp, Slash } from "lucide-react";
-import { graphql, useFragment } from "react-relay";
+import { graphql, useFragment, useMutation } from "react-relay";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -17,7 +17,32 @@ const QuestionDetailsFragment = graphql`
     title
     description
     votesCount
+    currentUserVote
     createdAt
+  }
+`;
+
+const QuestionDetailsVoteMutation = graphql`
+  mutation QuestionDetailsVoteMutation($voteType: VoteType!, $questionId: ID!) {
+    voteQuestion(voteType: $voteType, questionId: $questionId) {
+      ... on VoteQuestionPayload {
+        question {
+          ...QuestionDetailsFragment
+        }
+      }
+    }
+  }
+`;
+
+const QuestionDetailsDeleteVoteMutation = graphql`
+  mutation QuestionDetailsDeleteVoteMutation($questionId: ID!) {
+    deleteQuestionVote(questionId: $questionId) {
+      ... on DeleteQuestionVotePayload {
+        question {
+          ...QuestionDetailsFragment
+        }
+      }
+    }
   }
 `;
 
@@ -27,6 +52,49 @@ export default function QuestionDetails({
   question: QuestionDetailsFragment$key;
 }) {
   const data = useFragment(QuestionDetailsFragment, question);
+  const [commitVoteMutation, isVoteMutationInFlight] = useMutation(
+    QuestionDetailsVoteMutation
+  );
+  const [commitDeleteVoteMutation, isDeleteVoteMutationInFlight] = useMutation(
+    QuestionDetailsDeleteVoteMutation
+  );
+
+  function handleVoteUp() {
+    if (data.currentUserVote === "UPVOTE") {
+      commitDeleteVoteMutation({
+        variables: {
+          questionId: data.id,
+        },
+      });
+      return;
+    }
+
+    commitVoteMutation({
+      variables: {
+        voteType: "UPVOTE",
+        questionId: data.id,
+      },
+    });
+  }
+
+  function handleVoteDown() {
+    if (data.currentUserVote === "DOWNVOTE") {
+      commitDeleteVoteMutation({
+        variables: {
+          questionId: data.id,
+        },
+      });
+      return;
+    }
+
+    commitVoteMutation({
+      variables: {
+        voteType: "DOWNVOTE",
+        questionId: data.id,
+      },
+    });
+  }
+
   return (
     <div className="w-full flex flex-col gap-4">
       <Breadcrumb>
@@ -42,11 +110,21 @@ export default function QuestionDetails({
       </Breadcrumb>
       <div className="flex items-center gap-6">
         <div className="flex flex-col gap-2 items-center">
-          <Button size="icon" variant="secondary">
+          <Button
+            size="icon"
+            variant="secondary"
+            onClick={handleVoteUp}
+            disabled={isVoteMutationInFlight || isDeleteVoteMutationInFlight}
+          >
             <ChevronUp className="h-4 w-4" />
           </Button>
           <h2 className="text-xl font-bold">{data.votesCount}</h2>
-          <Button size="icon" variant="secondary">
+          <Button
+            size="icon"
+            variant="secondary"
+            onClick={handleVoteDown}
+            disabled={isVoteMutationInFlight || isDeleteVoteMutationInFlight}
+          >
             <ChevronDown className="h-4 w-4" />
           </Button>
         </div>

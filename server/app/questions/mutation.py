@@ -4,8 +4,10 @@ import strawberry
 from aioinject import Inject
 from aioinject.ext.strawberry import inject
 from result import Err
-from strawberry import Info, relay
+from strawberry import relay
 
+from app.context import Info
+from app.lib.constants import VoteType
 from app.scalars import ID
 
 from .exceptions import QuestionNotFoundError
@@ -15,8 +17,10 @@ from .types import (
     CreateAnswerPayload,
     CreateQuestionPayload,
     DeleteQuestionPayload,
+    DeleteQuestionVotePayload,
     QuestionNotFoundErrorType,
     QuestionType,
+    VoteQuestionPayload,
 )
 
 
@@ -85,6 +89,70 @@ class QuestionMutation:
         )
 
     @strawberry.mutation(  # type: ignore[misc]
+        graphql_type=VoteQuestionPayload,
+        description="Upvote a question.",
+    )
+    @inject
+    async def vote_question(
+        self,
+        info: Info,
+        question_id: Annotated[
+            ID,
+            strawberry.argument(
+                description="The ID of the question to vote for.",
+            ),
+        ],
+        vote_type: Annotated[
+            VoteType,
+            strawberry.argument(
+                description="The type of vote to cast.",
+            ),
+        ],
+        question_service: Annotated[QuestionService, Inject],
+    ) -> VoteQuestionPayload | QuestionNotFoundErrorType:
+        """Vote for a question."""
+        result = await question_service.vote_question(
+            user_id=info.context.user_id,
+            question_id=int(question_id.node_id),
+            vote_type=vote_type,
+        )
+
+        if isinstance(result, Err):
+            match result.err_value:
+                case QuestionNotFoundError():
+                    return QuestionNotFoundErrorType()
+
+        return VoteQuestionPayload(question=await question_id.resolve_node(info))
+
+    @strawberry.mutation(  # type: ignore[misc]
+        graphql_type=DeleteQuestionVotePayload,
+        description="Delete a question vote.",
+    )
+    @inject
+    async def delete_question_vote(
+        self,
+        info: Info,
+        question_id: Annotated[
+            ID,
+            strawberry.argument(
+                description="The ID of the question to remove the vote for.",
+            ),
+        ],
+        question_service: Annotated[QuestionService, Inject],
+    ) -> DeleteQuestionVotePayload | QuestionNotFoundErrorType:
+        """Delete a question vote."""
+        result = await question_service.delete_vote(
+            user_id=info.context.user_id, question_id=int(question_id.node_id)
+        )
+
+        if isinstance(result, Err):
+            match result.err_value:
+                case QuestionNotFoundError():
+                    return QuestionNotFoundErrorType()
+
+        return DeleteQuestionVotePayload(question=await question_id.resolve_node(info))
+
+    @strawberry.mutation(  # type: ignore[misc]
         graphql_type=CreateAnswerPayload,
         description="Create a new answer.",
     )
@@ -115,8 +183,6 @@ class QuestionMutation:
         answer = result.unwrap()
 
         question = await question_id.resolve_node(info)
-
-        print(question)
 
         return CreateAnswerPayload(
             answer_edge=relay.Edge(

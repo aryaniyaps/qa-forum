@@ -1,13 +1,18 @@
 from result import Err, Ok, Result
 
+from app.lib.constants import VoteType
+
 from .exceptions import AnswerNotFoundError, QuestionNotFoundError
 from .models import Answer, Question
-from .repositories import AnswerRepo, QuestionRepo
+from .repositories import AnswerRepo, QuestionRepo, QuestionVoteRepo
 
 
 class QuestionService:
-    def __init__(self, question_repo: QuestionRepo) -> None:
+    def __init__(
+        self, question_repo: QuestionRepo, question_vote_repo: QuestionVoteRepo
+    ) -> None:
         self._question_repo = question_repo
+        self._question_vote_repo = question_vote_repo
 
     async def create(self, title: str, description: str) -> Result[Question, None]:
         """Create a new question."""
@@ -17,6 +22,43 @@ class QuestionService:
                 description=description,
             )
         )
+
+    async def vote_question(
+        self, user_id: str, question_id: int, vote_type: VoteType
+    ) -> Result[None, QuestionNotFoundError]:
+        """Upvote a question."""
+        existing_question = await self._question_repo.get(question_id=question_id)
+        if existing_question is None:
+            return Err(QuestionNotFoundError())
+
+        if existing_question_vote := await self._question_vote_repo.get(
+            question_id=existing_question.id, user_id=user_id
+        ):
+            await self._question_vote_repo.update(
+                question_vote=existing_question_vote,
+                vote_type=vote_type,
+            )
+        else:
+            await self._question_vote_repo.create(
+                question=existing_question,
+                user_id=user_id,
+                vote_type=vote_type,
+            )
+        return Ok(None)
+
+    async def delete_vote(
+        self, user_id: str, question_id: int
+    ) -> Result[None, QuestionNotFoundError]:
+        """Delete a vote from a question."""
+        existing_question = await self._question_repo.get(question_id=question_id)
+        if existing_question is None:
+            return Err(QuestionNotFoundError())
+
+        await self._question_vote_repo.delete(
+            question_id=existing_question.id,
+            user_id=user_id,
+        )
+        return Ok(None)
 
     async def delete(self, question_id: int) -> Result[Question, QuestionNotFoundError]:
         """Delete a question by ID."""

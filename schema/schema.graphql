@@ -37,6 +37,10 @@ scalar DateTime
 
 union DeleteQuestionPayload = Question | QuestionNotFoundError
 
+type DeleteQuestionVotePayload {
+  question: Question!
+}
+
 interface Error {
   message: String!
 }
@@ -56,6 +60,21 @@ type Mutation {
     """The ID of the question to delete."""
     questionId: ID!
   ): DeleteQuestionPayload!
+
+  """Upvote a question."""
+  voteQuestion(
+    """The ID of the question to vote for."""
+    questionId: ID!
+
+    """The type of vote to cast."""
+    voteType: VoteType!
+  ): VoteQuestionPayload!
+
+  """Delete a question vote."""
+  deleteQuestionVote(
+    """The ID of the question to remove the vote for."""
+    questionId: ID!
+  ): DeleteQuestionVotePayload!
 
   """Create a new answer."""
   createAnswer(
@@ -108,6 +127,7 @@ type Question implements Node {
   createdAt: DateTime!
   updatedAt: DateTime
   descriptionPreview: String!
+  currentUserVote: VoteType
   answers(before: ID = null, after: ID = null, first: Int = null, last: Int = null): AnswerConnection!
 }
 
@@ -130,4 +150,13 @@ type QuestionEdge {
 
 type QuestionNotFoundError implements Error {
   message: String!
+}
+
+type VoteQuestionPayload {
+  question: Question!
+}
+
+enum VoteType {
+  UPVOTE
+  DOWNVOTE
 }

@@ -1,9 +1,62 @@
-from sqlalchemy import select
+from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database.paginator import PaginatedResult, Paginator
+from app.lib.constants import VoteType
 
-from .models import Answer, Question
+from .models import Answer, Question, QuestionVote
+
+
+class QuestionVoteRepo:
+    def __init__(self, session: AsyncSession) -> None:
+        self._session = session
+
+    async def get(self, question_id: int, user_id: str) -> QuestionVote | None:
+        """Get question vote by ID."""
+        return await self._session.scalar(
+            select(QuestionVote).where(
+                QuestionVote.question_id == question_id
+                and QuestionVote.user_id == user_id
+            ),
+        )
+
+    async def create(
+        self,
+        question: Question,
+        user_id: str,
+        vote_type: VoteType,
+    ) -> QuestionVote:
+        """Create a new question vote."""
+        question_vote = QuestionVote(
+            question_id=question.id,
+            user_id=user_id,
+            vote_type=vote_type,
+        )
+        self._session.add(question_vote)
+        await self._session.commit()
+        return question_vote
+
+    async def update(
+        self,
+        question_vote: QuestionVote,
+        *,
+        vote_type: VoteType,
+    ) -> QuestionVote:
+        """Update the given question vote."""
+        question_vote.vote_type = vote_type
+        self._session.add(question_vote)
+        await self._session.commit()
+        return question_vote
+
+    async def delete(self, question_id: int, user_id: str) -> None:
+        """Delete a question vote."""
+        await self._session.execute(
+            delete(QuestionVote).where(
+                (QuestionVote.question_id == question_id)
+                and (QuestionVote.user_id == user_id),
+            ),
+        )
+        await self._session.commit()
 
 
 class QuestionRepo:
@@ -36,7 +89,7 @@ class QuestionRepo:
         question.title = title
         question.description = description
         self._session.add(question)
-        await self._session.flush()
+        await self._session.commit()
         return question
 
     async def get_many_by_ids(self, question_ids: list[int]) -> list[Question | None]:
@@ -73,7 +126,7 @@ class QuestionRepo:
     async def delete(self, question: Question) -> None:
         """Delete a question by ID."""
         await self._session.delete(question)
-        await self._session.flush()
+        await self._session.commit()
 
 
 class AnswerRepo:
@@ -104,7 +157,7 @@ class AnswerRepo:
         """Update the given answer."""
         answer.content = content
         self._session.add(answer)
-        await self._session.flush()
+        await self._session.commit()
         return answer
 
     async def get_many_by_ids(self, answer_ids: list[int]) -> list[Answer | None]:
@@ -142,4 +195,4 @@ class AnswerRepo:
     async def delete(self, answer: Answer) -> None:
         """Delete a answer by ID."""
         await self._session.delete(answer)
-        await self._session.flush()
+        await self._session.commit()

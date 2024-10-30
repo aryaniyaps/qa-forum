@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7aadd1653fdc0f530570dd37d6d74ed5>>
+ * @generated SignedSource<<977c6c2fca57382aa4a3bdc9ef877744>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -272,6 +272,13 @@ return {
                 "name": "votesCount",
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "currentUserVote",
+                "storageKey": null
+              },
               (v5/*: any*/)
             ],
             "type": "Question",
@@ -283,12 +290,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bee10d000f1fa3557ac663ba99d0a7e2",
+    "cacheID": "95ea275d600f614ccdd18182e730dd2e",
     "id": null,
     "metadata": {},
     "name": "QuestionDetailPageQuery",
     "operationKind": "query",
-    "text": "query QuestionDetailPageQuery(\n  $questionId: ID!\n) {\n  node(id: $questionId) {\n    __typename\n    ... on Question {\n      ...AnswerCountFragment\n      ...AnswerListFragment\n      ...AnswerControllerFragment\n      ...QuestionDetailsFragment\n    }\n    id\n  }\n}\n\nfragment AnswerControllerFragment on Question {\n  id\n  answers(first: 5) {\n    edges {\n      __typename\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment AnswerCountFragment on Question {\n  answersCount\n}\n\nfragment AnswerFragment on Answer {\n  id\n  content\n  createdAt\n  updatedAt\n}\n\nfragment AnswerListFragment on Question {\n  answers(first: 5) {\n    edges {\n      node {\n        id\n        ...AnswerFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n  id\n}\n\nfragment QuestionDetailsFragment on Question {\n  id\n  title\n  description\n  votesCount\n  createdAt\n}\n"
+    "text": "query QuestionDetailPageQuery(\n  $questionId: ID!\n) {\n  node(id: $questionId) {\n    __typename\n    ... on Question {\n      ...AnswerCountFragment\n      ...AnswerListFragment\n      ...AnswerControllerFragment\n      ...QuestionDetailsFragment\n    }\n    id\n  }\n}\n\nfragment AnswerControllerFragment on Question {\n  id\n  answers(first: 5) {\n    edges {\n      __typename\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment AnswerCountFragment on Question {\n  answersCount\n}\n\nfragment AnswerFragment on Answer {\n  id\n  content\n  createdAt\n  updatedAt\n}\n\nfragment AnswerListFragment on Question {\n  answers(first: 5) {\n    edges {\n      node {\n        id\n        ...AnswerFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n  id\n}\n\nfragment QuestionDetailsFragment on Question {\n  id\n  title\n  description\n  votesCount\n  currentUserVote\n  createdAt\n}\n"
   }
 };
 })();

@@ -8,6 +8,7 @@ from app.dataloaders import Dataloaders
 
 @dataclasses.dataclass
 class Context:
+    user_id: str
     request: Request | WebSocket
     response: Response | None
     loaders: Dataloaders

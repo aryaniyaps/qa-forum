@@ -13,6 +13,7 @@ class GraphQLApp(GraphQL[Context, None]):
         response: Response | None = None,
     ) -> Context:
         return Context(
+            user_id=request.cookies.get("user_id"),
             request=request,
             response=response,
             loaders=create_dataloaders(),

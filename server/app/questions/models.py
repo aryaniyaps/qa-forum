@@ -1,12 +1,14 @@
 from datetime import datetime
+from enum import Enum
 
-from sqlalchemy import TEXT, ForeignKey, func, select
+from sqlalchemy import TEXT, Enum, ForeignKey, case, func, select
 from sqlalchemy.dialects.postgresql import CITEXT
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql.functions import now
 
 from app.database.base import Base
+from app.lib.constants import VoteType
 
 
 class Answer(Base):
@@ -34,6 +36,9 @@ class Answer(Base):
     question = relationship("Question", back_populates="answers")
 
 
+# Define an enumeration for vote types
+
+
 class QuestionVote(Base):
     __tablename__ = "question_votes"
 
@@ -43,6 +48,11 @@ class QuestionVote(Base):
         ForeignKey("questions.id"),
         nullable=False,
         primary_key=True,
+    )
+
+    vote_type: Mapped[VoteType] = mapped_column(
+        Enum(VoteType),  # Use the SQLAEnum type for the enum field
+        nullable=False,
     )
 
     question = relationship("Question", back_populates="votes")
@@ -99,13 +109,28 @@ class Question(Base):
 
     @hybrid_property
     def votes_count(self):
-        return len(self.votes)
+        return sum(vote.vote_type == VoteType.UPVOTE for vote in self.votes) - sum(
+            vote.vote_type == VoteType.DOWNVOTE for vote in self.votes
+        )
 
     @votes_count.expression
     @classmethod
     def votes_count(cls):
         return (
-            select(func.count(QuestionVote.id))
+            select(
+                func.count(
+                    case(
+                        (QuestionVote.vote_type == VoteType.UPVOTE, 1),
+                        else_=0,
+                    )
+                )
+                - func.count(
+                    case(
+                        (QuestionVote.vote_type == VoteType.DOWNVOTE, 1),
+                        else_=0,
+                    )
+                )
+            )
             .where(QuestionVote.question_id == cls.id)
             .correlate_except(QuestionVote)
             .scalar_subquery()
