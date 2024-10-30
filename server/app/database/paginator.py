@@ -7,8 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import InstrumentedAttribute
 from sqlalchemy.sql import Select
 
-from app.constants import MAX_PAGINATION_LIMIT
-from app.errors import PaginationError
+from app.lib.constants import MAX_PAGINATION_LIMIT
 
 from .base import Base
 
@@ -54,42 +53,42 @@ class Paginator(Generic[ModelType, CursorType]):
         """Validate pagination arguments."""
         if first is not None and last is not None:
             first_and_last_error = "Cannot provide both `first` and `last`"
-            raise PaginationError(first_and_last_error)
+            raise ValueError(first_and_last_error)
 
         if after is not None and before is not None:
             after_and_before_error = "Cannot provide both `after` and `before`"
-            raise PaginationError(after_and_before_error)
+            raise ValueError(after_and_before_error)
 
         if first is not None:
             if first < 0:
                 first_not_positive_error = "`first` must be a positive integer"
-                raise PaginationError(first_not_positive_error)
+                raise ValueError(first_not_positive_error)
             if first > MAX_PAGINATION_LIMIT:
                 max_pagination_limit_error = f"`first` exceeds pagination limit of {MAX_PAGINATION_LIMIT} records"
-                raise PaginationError(max_pagination_limit_error)
+                raise ValueError(max_pagination_limit_error)
             if before is not None:
                 first_and_before_error = "`first` cannot be provided with `before`"
-                raise PaginationError(first_and_before_error)
+                raise ValueError(first_and_before_error)
             return first
 
         if last is not None:
             if last < 0:
                 last_not_positive_error = "`last` must be a positive integer"
-                raise PaginationError(last_not_positive_error)
+                raise ValueError(last_not_positive_error)
             if last > MAX_PAGINATION_LIMIT:
                 max_pagination_limit_error = (
                     f"`last` exceeds pagination limit of {MAX_PAGINATION_LIMIT} records"
                 )
-                raise PaginationError(max_pagination_limit_error)
+                raise ValueError(max_pagination_limit_error)
             if after is not None:
                 last_and_after_error = "`last` cannot be provided with `after`"
-                raise PaginationError(last_and_after_error)
+                raise ValueError(last_and_after_error)
             return last
 
         no_first_and_last_error = (
             "You must provide either `first` or `last` to paginate"
         )
-        raise PaginationError(no_first_and_last_error)
+        raise ValueError(no_first_and_last_error)
 
     def __apply_ordering(
         self, *, statement: Select[tuple[ModelType]], last: int | None

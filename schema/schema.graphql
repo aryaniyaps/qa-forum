@@ -1,0 +1,95 @@
+type CreateTodoPayload {
+  todoEdge: TodoEdge!
+}
+
+"""Date with time (isoformat)"""
+scalar DateTime
+
+union DeleteTodoPayload = Todo | TodoNotFoundError
+
+interface Error {
+  message: String!
+}
+
+type Mutation {
+  """Create a new todo."""
+  createTodo(
+    """The content of the todo."""
+    content: String!
+  ): CreateTodoPayload!
+
+  """Delete a todo by ID."""
+  deleteTodo(
+    """The ID of the todo to delete."""
+    todoId: ID!
+  ): DeleteTodoPayload!
+
+  """Toggle the completed state of a todo by ID."""
+  toggleTodoCompleted(
+    """The ID of the todo to toggle."""
+    todoId: ID!
+  ): ToggleTodoCompletedPayload!
+}
+
+"""An object with a Globally Unique ID"""
+interface Node {
+  """The Globally Unique ID of this object"""
+  id: ID!
+}
+
+"""Information to aid in pagination."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type Query {
+  node(
+    """The ID of the object."""
+    id: ID!
+  ): Node
+
+  """Get all todos available."""
+  todos(before: String = null, after: String = null, first: Int = null, last: Int = null): TodoConnection!
+}
+
+type Todo implements Node {
+  """The Globally Unique ID of this object"""
+  id: ID!
+  content: String!
+  completed: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type TodoConnection {
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection"""
+  edges: [TodoEdge!]!
+}
+
+"""An edge in a connection."""
+type TodoEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: Todo!
+}
+
+type TodoNotFoundError implements Error {
+  message: String!
+}
+
+union ToggleTodoCompletedPayload = Todo | TodoNotFoundError

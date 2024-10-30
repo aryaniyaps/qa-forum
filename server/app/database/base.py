@@ -1,9 +1,7 @@
 from datetime import datetime
 
 from sqlalchemy import DateTime, MetaData
-from sqlalchemy.ext.asyncio import (
-    AsyncAttrs,
-)
+from sqlalchemy.ext.asyncio import AsyncAttrs
 from sqlalchemy.orm import DeclarativeBase, registry
 
 database_metadata = MetaData(
