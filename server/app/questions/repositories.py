@@ -65,9 +65,15 @@ class QuestionRepo:
 
     async def create(self, title: str, description: str) -> Question:
         """Create a new question."""
-        question = Question(title=title, description=description)
-        self._session.add(question)
-        await self._session.commit()
+        async with self._session as session:
+            question = Question(title=title, description=description)
+            session.add(question)
+
+            await session.flush()  # Ensures question ID is generated before refresh
+            await session.refresh(question)
+
+            await session.commit()
+
         return question
 
     async def get(self, question_id: int) -> Question | None:

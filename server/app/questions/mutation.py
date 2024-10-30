@@ -8,6 +8,7 @@ from strawberry import relay
 
 from app.context import Info
 from app.lib.constants import VoteType
+from app.questions.repositories import QuestionRepo
 from app.scalars import ID
 
 from .exceptions import QuestionNotFoundError

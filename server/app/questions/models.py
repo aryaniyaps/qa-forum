@@ -1,7 +1,7 @@
 from datetime import datetime
 from enum import Enum
 
-from sqlalchemy import TEXT, Enum, ForeignKey, case, func, select
+from sqlalchemy import TEXT, Enum, ForeignKey, SQLColumnExpression, case, func, select
 from sqlalchemy.dialects.postgresql import CITEXT
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -97,9 +97,9 @@ class Question(Base):
     def answers_count(self):
         return len(self.answers)
 
-    @answers_count.expression
+    @answers_count.inplace.expression
     @classmethod
-    def answers_count(cls):
+    def answers_count(cls) -> SQLColumnExpression[int]:
         return (
             select(func.count(Answer.id))
             .where(Answer.question_id == cls.id)
@@ -113,9 +113,9 @@ class Question(Base):
             vote.vote_type == VoteType.DOWNVOTE for vote in self.votes
         )
 
-    @votes_count.expression
+    @votes_count.inplace.expression
     @classmethod
-    def votes_count(cls):
+    def votes_count(cls) -> SQLColumnExpression[int]:
         return (
             select(
                 func.count(
