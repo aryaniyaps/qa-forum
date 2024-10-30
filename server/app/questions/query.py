@@ -5,26 +5,26 @@ from aioinject import Inject
 from aioinject.ext.strawberry import inject
 from strawberry import relay
 
-from .repositories import TodoRepo
-from .types import TodoConnectionType
+from .repositories import QuestionRepo
+from .types import QuestionConnectionType
 
 
 @strawberry.type(name="Viewer")
-class TodoQuery:
+class QuestionQuery:
     @strawberry.field(  # type: ignore[misc]
-        graphql_type=TodoConnectionType,
-        description="Get all todos available.",
+        graphql_type=QuestionConnectionType,
+        description="Get all questions available.",
     )
     @inject
-    async def todos(
+    async def questions(
         self,
-        todo_repo: Annotated[TodoRepo, Inject],
+        question_repo: Annotated[QuestionRepo, Inject],
         before: str | None = None,
         after: str | None = None,
         first: int | None = None,
         last: int | None = None,
-    ) -> TodoConnectionType:
-        paginated_result = await todo_repo.get_all(
+    ) -> QuestionConnectionType:
+        paginated_result = await question_repo.get_all(
             first=first,
             last=last,
             after=(
@@ -43,6 +43,6 @@ class TodoQuery:
             ),
         )
 
-        return TodoConnectionType.from_paginated_result(
+        return QuestionConnectionType.from_paginated_result(
             paginated_result=paginated_result,
         )

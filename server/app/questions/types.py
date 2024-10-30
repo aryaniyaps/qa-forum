@@ -8,25 +8,25 @@ from strawberry import relay
 from app.base.types import BaseErrorType, BaseNodeType
 from app.context import Info
 from app.database.paginator import PaginatedResult
-from app.todos.models import Todo
+from app.questions.models import Question
 
 
-@strawberry.type(name="Todo")
-class TodoType(BaseNodeType[Todo]):
-    content: str
-    completed: bool
+@strawberry.type(name="Question")
+class QuestionType(BaseNodeType[Question]):
+    title: str
+    description: str
     created_at: datetime
     updated_at: datetime | None
 
     @classmethod
-    def from_orm(cls, todo: Todo) -> Self:
+    def from_orm(cls, question: Question) -> Self:
         """Construct a node from an ORM instance."""
         return cls(
-            id=todo.id,
-            content=todo.content,
-            completed=todo.completed,
-            created_at=todo.created_at,
-            updated_at=todo.updated_at,
+            id=question.id,
+            title=question.title,
+            description=question.description,
+            created_at=question.created_at,
+            updated_at=question.updated_at,
         )
 
     @classmethod
@@ -37,54 +37,52 @@ class TodoType(BaseNodeType[Todo]):
         node_ids: Iterable[str],
         required: bool = False,  # noqa: ARG003
     ):
-        todos = await info.context.loaders.todo_by_id.load_many(node_ids)
-        return [cls.from_orm(todo) if todo is not None else todo for todo in todos]
+        questions = await info.context.loaders.question_by_id.load_many(node_ids)
+        return [
+            cls.from_orm(question) if question is not None else question
+            for question in questions
+        ]
 
 
-@strawberry.type(name="TodoNotFoundError")
-class TodoNotFoundErrorType(BaseErrorType):
-    message: str = "Todo does not exist"
+@strawberry.type(name="QuestionNotFoundError")
+class QuestionNotFoundErrorType(BaseErrorType):
+    message: str = "Question does not exist"
 
 
 @strawberry.type
-class CreateTodoPayload:
-    todo_edge: relay.Edge[TodoType]
+class CreateQuestionPayload:
+    question_edge: relay.Edge[QuestionType]
 
 
-ToggleTodoCompletedPayload = Annotated[
-    TodoType | TodoNotFoundErrorType,
-    strawberry.union(name="ToggleTodoCompletedPayload"),
-]
-
-DeleteTodoPayload = Annotated[
-    TodoType | TodoNotFoundErrorType,
-    strawberry.union(name="DeleteTodoPayload"),
+DeleteQuestionPayload = Annotated[
+    QuestionType | QuestionNotFoundErrorType,
+    strawberry.union(name="DeleteQuestionPayload"),
 ]
 
 
-@strawberry.type(name="TodoConnection")
-class TodoConnectionType(relay.Connection[TodoType]):
+@strawberry.type(name="QuestionConnection")
+class QuestionConnectionType(relay.Connection[QuestionType]):
     @classmethod
     def from_paginated_result(
-        cls, paginated_result: PaginatedResult[Todo, int]
+        cls, paginated_result: PaginatedResult[Question, int]
     ) -> Self:
         return cls(
             page_info=relay.PageInfo(
                 has_next_page=paginated_result.page_info.has_next_page,
                 start_cursor=relay.to_base64(
-                    TodoType,
+                    QuestionType,
                     paginated_result.page_info.start_cursor,
                 ),
                 has_previous_page=paginated_result.page_info.has_previous_page,
                 end_cursor=relay.to_base64(
-                    TodoType,
+                    QuestionType,
                     paginated_result.page_info.end_cursor,
                 ),
             ),
             edges=[
                 relay.Edge(
-                    node=TodoType.from_orm(todo),
-                    cursor=relay.to_base64(TodoType, todo.id),
+                    node=QuestionType.from_orm(todo),
+                    cursor=relay.to_base64(QuestionType, todo.id),
                 )
                 for todo in paginated_result.entities
             ],

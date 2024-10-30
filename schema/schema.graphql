@@ -1,9 +1,15 @@
+type CreateQuestionPayload {
+  questionEdge: QuestionEdge!
+}
+
 type CreateTodoPayload {
   todoEdge: TodoEdge!
 }
 
 """Date with time (isoformat)"""
 scalar DateTime
+
+union DeleteQuestionPayload = Question | QuestionNotFoundError
 
 union DeleteTodoPayload = Todo | TodoNotFoundError
 
@@ -29,6 +35,21 @@ type Mutation {
     """The ID of the todo to toggle."""
     todoId: ID!
   ): ToggleTodoCompletedPayload!
+
+  """Create a new question."""
+  createQuestion(
+    """The title of the question."""
+    title: String!
+
+    """The title of the question."""
+    description: String!
+  ): CreateQuestionPayload!
+
+  """Delete a question by ID."""
+  deleteQuestion(
+    """The ID of the question to delete."""
+    questionId: ID!
+  ): DeleteQuestionPayload!
 }
 
 """An object with a Globally Unique ID"""
@@ -60,6 +81,39 @@ type Query {
 
   """Get all todos available."""
   todos(before: String = null, after: String = null, first: Int = null, last: Int = null): TodoConnection!
+
+  """Get all questions available."""
+  questions(before: String = null, after: String = null, first: Int = null, last: Int = null): QuestionConnection!
+}
+
+type Question implements Node {
+  """The Globally Unique ID of this object"""
+  id: ID!
+  title: String!
+  description: String!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type QuestionConnection {
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection"""
+  edges: [QuestionEdge!]!
+}
+
+"""An edge in a connection."""
+type QuestionEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: Question!
+}
+
+type QuestionNotFoundError implements Error {
+  message: String!
 }
 
 type Todo implements Node {

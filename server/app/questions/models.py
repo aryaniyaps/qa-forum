@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from sqlalchemy import TEXT
 from sqlalchemy.dialects.postgresql import CITEXT
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.sql.functions import now
@@ -7,17 +8,17 @@ from sqlalchemy.sql.functions import now
 from app.database.base import Base
 
 
-class Todo(Base):
-    __tablename__ = "notes"
+class Question(Base):
+    __tablename__ = "questions"
 
     id: Mapped[int] = mapped_column(primary_key=True)
 
-    content: Mapped[str] = mapped_column(
-        CITEXT(250),
+    title: Mapped[str] = mapped_column(
+        CITEXT(150),
     )
 
-    completed: Mapped[bool] = mapped_column(
-        default=False,
+    description: Mapped[str] = mapped_column(
+        TEXT(),
     )
 
     created_at: Mapped[datetime] = mapped_column(
