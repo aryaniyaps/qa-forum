@@ -104,6 +104,7 @@ type Question implements Node {
   title: String!
   description: String!
   answersCount: Int!
+  votesCount: Int!
   createdAt: DateTime!
   updatedAt: DateTime
   descriptionPreview: String!

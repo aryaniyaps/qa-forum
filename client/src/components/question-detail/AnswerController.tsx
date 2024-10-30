@@ -89,7 +89,7 @@ export default function AnswerController({ question }: Props) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-4 w-full"
+        className="flex flex-col gap-4 w-full "
       >
         <FormField
           control={form.control}

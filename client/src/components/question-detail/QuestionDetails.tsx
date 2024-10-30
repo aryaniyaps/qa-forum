@@ -1,5 +1,5 @@
 import { dtf } from "@/lib/intl";
-import { Slash } from "lucide-react";
+import { ChevronDown, ChevronUp, Slash } from "lucide-react";
 import { graphql, useFragment } from "react-relay";
 import {
   Breadcrumb,
@@ -8,6 +8,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "../ui/breadcrumb";
+import { Button } from "../ui/button";
 import { QuestionDetailsFragment$key } from "./__generated__/QuestionDetailsFragment.graphql";
 
 const QuestionDetailsFragment = graphql`
@@ -15,6 +16,7 @@ const QuestionDetailsFragment = graphql`
     id
     title
     description
+    votesCount
     createdAt
   }
 `;
@@ -38,13 +40,22 @@ export default function QuestionDetails({
           <BreadcrumbItem>{data.id}</BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <div className="w-full flex flex-col gap-2">
-        <h3 className="mt-8 scroll-m-20 text-2xl font-semibold tracking-tight">
-          {data.title}
-        </h3>
-        <p className="leading-7 [&:not(:first-child)]:mt-6">
-          {data.description}
-        </p>
+      <div className="flex items-center gap-6">
+        <div className="flex flex-col gap-2 items-center">
+          <Button size="icon" variant="secondary">
+            <ChevronUp className="h-4 w-4" />
+          </Button>
+          <h2 className="text-xl font-bold">{data.votesCount}</h2>
+          <Button size="icon" variant="secondary">
+            <ChevronDown className="h-4 w-4" />
+          </Button>
+        </div>
+        <div className="w-full flex flex-col h-full justify-center gap-2">
+          <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+            {data.title}
+          </h3>
+          <p>{data.description}</p>
+        </div>
       </div>
       {/* Display additional fields here */}
       <p className="text-muted-foreground text-sm">

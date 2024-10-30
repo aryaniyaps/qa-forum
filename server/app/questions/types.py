@@ -79,15 +79,16 @@ class QuestionType(BaseNodeType[Question]):
     title: str
     description: str
     answers_count: int
+    votes_count: int
     created_at: datetime
     updated_at: datetime | None
 
     @strawberry.field
     def description_preview(self) -> str:
-        """Return the first 50 characters of the description."""
-        if len(self.description) <= 50:
+        """Return a preview of the description."""
+        if len(self.description) <= 65:
             return self.description
-        return self.description[:50] + "..."
+        return self.description[:65] + "..."
 
     @strawberry.field
     @inject
@@ -124,6 +125,7 @@ class QuestionType(BaseNodeType[Question]):
             title=question.title,
             description=question.description,
             answers_count=question.answers_count,
+            votes_count=question.votes_count,
             created_at=question.created_at,
             updated_at=question.updated_at,
         )

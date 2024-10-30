@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.graphql_app import create_graphql_app
+from app.middleware import user_id_middleware
 
 
 def add_routes(app: FastAPI) -> None:
@@ -25,6 +26,8 @@ def add_middleware(app: FastAPI) -> None:
         CorrelationIdMiddleware,
         header_name="X-Request-ID",
     )
+
+    app.middleware("http")(user_id_middleware)
 
 
 def create_app() -> FastAPI:
