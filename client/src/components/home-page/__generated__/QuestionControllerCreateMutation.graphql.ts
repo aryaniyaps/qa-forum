@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ba1c56bad21e4cb8f2a9499530d827d3>>
+ * @generated SignedSource<<f32ea736a23bb5bcc37d8ac99fda7e9f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -176,6 +176,13 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "votesCount",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "createdAt",
                     "storageKey": null
                   },
@@ -214,12 +221,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5c70af6e4552e7e5e961011f6f7a80c7",
+    "cacheID": "6399839e5279d4a76f82e79d36962831",
     "id": null,
     "metadata": {},
     "name": "QuestionControllerCreateMutation",
     "operationKind": "mutation",
-    "text": "mutation QuestionControllerCreateMutation(\n  $title: String!\n  $description: String!\n) {\n  createQuestion(title: $title, description: $description) {\n    questionEdge {\n      node {\n        ...QuestionFragment\n        id\n      }\n    }\n  }\n}\n\nfragment QuestionFragment on Question {\n  id\n  title\n  descriptionPreview\n  answersCount\n  createdAt\n  updatedAt\n}\n"
+    "text": "mutation QuestionControllerCreateMutation(\n  $title: String!\n  $description: String!\n) {\n  createQuestion(title: $title, description: $description) {\n    questionEdge {\n      node {\n        ...QuestionFragment\n        id\n      }\n    }\n  }\n}\n\nfragment QuestionFragment on Question {\n  id\n  title\n  descriptionPreview\n  answersCount\n  votesCount\n  createdAt\n  updatedAt\n}\n"
   }
 };
 })();

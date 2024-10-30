@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b813d212c453f12d21a2700af478ca7d>>
+ * @generated SignedSource<<462ebd670bf571c3f7bd1a04f75c2657>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -198,6 +198,13 @@ return {
                 "name": "answersCount",
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "votesCount",
+                "storageKey": null
+              },
               (v5/*: any*/),
               (v6/*: any*/)
             ],
@@ -257,12 +264,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b51b49f0452a787319ac542f16c925c4",
+    "cacheID": "f6a890ad3252574f075a4038f9794157",
     "id": null,
     "metadata": {},
     "name": "AnswerControllerCreateMutation",
     "operationKind": "mutation",
-    "text": "mutation AnswerControllerCreateMutation(\n  $content: String!\n  $questionId: ID!\n) {\n  createAnswer(content: $content, questionId: $questionId) {\n    question {\n      ...QuestionFragment\n      id\n    }\n    answerEdge {\n      node {\n        ...AnswerFragment\n        id\n      }\n    }\n  }\n}\n\nfragment AnswerFragment on Answer {\n  id\n  content\n  createdAt\n  updatedAt\n}\n\nfragment QuestionFragment on Question {\n  id\n  title\n  descriptionPreview\n  answersCount\n  createdAt\n  updatedAt\n}\n"
+    "text": "mutation AnswerControllerCreateMutation(\n  $content: String!\n  $questionId: ID!\n) {\n  createAnswer(content: $content, questionId: $questionId) {\n    question {\n      ...QuestionFragment\n      id\n    }\n    answerEdge {\n      node {\n        ...AnswerFragment\n        id\n      }\n    }\n  }\n}\n\nfragment AnswerFragment on Answer {\n  id\n  content\n  createdAt\n  updatedAt\n}\n\nfragment QuestionFragment on Question {\n  id\n  title\n  descriptionPreview\n  answersCount\n  votesCount\n  createdAt\n  updatedAt\n}\n"
   }
 };
 })();

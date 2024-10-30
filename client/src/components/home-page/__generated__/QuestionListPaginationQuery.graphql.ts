@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9be459c9753e7ec8020e698ec19bc213>>
+ * @generated SignedSource<<930432a79b5543e400f0efb44664af3a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -136,6 +136,13 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "votesCount",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "createdAt",
                     "storageKey": null
                   },
@@ -218,12 +225,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0c92bcdc59197a67a2bf10f83eb73fd0",
+    "cacheID": "21b9a64249ce66c5b8eae2f630319595",
     "id": null,
     "metadata": {},
     "name": "QuestionListPaginationQuery",
     "operationKind": "query",
-    "text": "query QuestionListPaginationQuery(\n  $count: Int = 5\n  $cursor: ID\n) {\n  ...QuestionListFragment_1G22uz\n}\n\nfragment QuestionFragment on Question {\n  id\n  title\n  descriptionPreview\n  answersCount\n  createdAt\n  updatedAt\n}\n\nfragment QuestionListFragment_1G22uz on Query {\n  questions(after: $cursor, first: $count) {\n    edges {\n      node {\n        id\n        ...QuestionFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
+    "text": "query QuestionListPaginationQuery(\n  $count: Int = 5\n  $cursor: ID\n) {\n  ...QuestionListFragment_1G22uz\n}\n\nfragment QuestionFragment on Question {\n  id\n  title\n  descriptionPreview\n  answersCount\n  votesCount\n  createdAt\n  updatedAt\n}\n\nfragment QuestionListFragment_1G22uz on Query {\n  questions(after: $cursor, first: $count) {\n    edges {\n      node {\n        id\n        ...QuestionFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
   }
 };
 })();

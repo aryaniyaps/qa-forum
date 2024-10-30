@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<91039c2856437adae027c877b3cab3f5>>
+ * @generated SignedSource<<7b40eba3ca9732c85ea72afe24b5fb96>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,7 @@ export type QuestionFragment$data = {
   readonly id: string;
   readonly title: string;
   readonly updatedAt: any | null | undefined;
+  readonly votesCount: number;
   readonly " $fragmentType": "QuestionFragment";
 };
 export type QuestionFragment$key = {
@@ -62,6 +63,13 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "votesCount",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "createdAt",
       "storageKey": null
     },
@@ -77,6 +85,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "5a8f8cd3506c94b0cbe8f1c9c6390d01";
+(node as any).hash = "1f6a62beaf5403f51d8436e3aafe7a2a";
 
 export default node;
