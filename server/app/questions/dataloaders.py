@@ -3,9 +3,23 @@ from typing import Annotated
 from aioinject import Inject
 from aioinject.ext.strawberry import inject
 
-from app.questions.repositories import QuestionRepo
+from app.questions.repositories import AnswerRepo, QuestionRepo
 
-from .models import Question
+from .models import Answer, Question
+
+
+@inject
+async def load_answer_by_id(
+    answer_ids: list[str],
+    answer_repo: Annotated[
+        AnswerRepo,
+        Inject,
+    ],
+) -> list[Answer | None]:
+    """Load multiple answers by their IDs."""
+    return await answer_repo.get_many_by_ids(
+        answer_ids=list(map(int, answer_ids)),
+    )
 
 
 @inject

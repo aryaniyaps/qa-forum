@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1e6662302c32565ec6beabb5cd5d676b>>
+ * @generated SignedSource<<6f282450c19bd2fc551f529b20fa7851>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,24 +10,23 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type QuestionFragment$data = {
+export type QuestionDetailsFragment$data = {
   readonly createdAt: any;
-  readonly descriptionPreview: string;
+  readonly description: string;
   readonly id: string;
   readonly title: string;
-  readonly updatedAt: any | null | undefined;
-  readonly " $fragmentType": "QuestionFragment";
+  readonly " $fragmentType": "QuestionDetailsFragment";
 };
-export type QuestionFragment$key = {
-  readonly " $data"?: QuestionFragment$data;
-  readonly " $fragmentSpreads": FragmentRefs<"QuestionFragment">;
+export type QuestionDetailsFragment$key = {
+  readonly " $data"?: QuestionDetailsFragment$data;
+  readonly " $fragmentSpreads": FragmentRefs<"QuestionDetailsFragment">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "QuestionFragment",
+  "name": "QuestionDetailsFragment",
   "selections": [
     {
       "alias": null,
@@ -47,7 +46,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "descriptionPreview",
+      "name": "description",
       "storageKey": null
     },
     {
@@ -56,19 +55,12 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "createdAt",
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "updatedAt",
-      "storageKey": null
     }
   ],
   "type": "Question",
   "abstractKey": null
 };
 
-(node as any).hash = "a0c4f405e075a26c514d58c11c4e79fa";
+(node as any).hash = "8158c5eb020137065de643fb89432159";
 
 export default node;

@@ -11,10 +11,10 @@ export default function App() {
   return (
     <React.StrictMode>
       <RelayEnvironmentProvider environment={environment}>
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <Suspense fallback={<LoadingScreen />}>
-          <RouterProvider router={router} />
-        </Suspense>
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+          <Suspense fallback={<LoadingScreen />}>
+            <RouterProvider router={router} />
+          </Suspense>
         </ThemeProvider>
       </RelayEnvironmentProvider>
     </React.StrictMode>

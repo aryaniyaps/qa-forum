@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a1d466cb9becb229abd3c126684a0bb3>>
+ * @generated SignedSource<<c60f154f62d806c8af224570b92c27ee>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -122,7 +122,7 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "description",
+                    "name": "descriptionPreview",
                     "storageKey": null
                   },
                   {
@@ -211,12 +211,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2235db5a5371cbe51435db57f93404b4",
+    "cacheID": "027e0c5c80471ead5dbac520d34f7079",
     "id": null,
     "metadata": {},
     "name": "QuestionListPaginationQuery",
     "operationKind": "query",
-    "text": "query QuestionListPaginationQuery(\n  $count: Int = 5\n  $cursor: String\n) {\n  ...QuestionListFragment_1G22uz\n}\n\nfragment QuestionFragment on Question {\n  id\n  title\n  description\n  createdAt\n  updatedAt\n}\n\nfragment QuestionListFragment_1G22uz on Query {\n  questions(after: $cursor, first: $count) {\n    edges {\n      node {\n        id\n        ...QuestionFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
+    "text": "query QuestionListPaginationQuery(\n  $count: Int = 5\n  $cursor: String\n) {\n  ...QuestionListFragment_1G22uz\n}\n\nfragment QuestionFragment on Question {\n  id\n  title\n  descriptionPreview\n  createdAt\n  updatedAt\n}\n\nfragment QuestionListFragment_1G22uz on Query {\n  questions(after: $cursor, first: $count) {\n    edges {\n      node {\n        id\n        ...QuestionFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
   }
 };
 })();

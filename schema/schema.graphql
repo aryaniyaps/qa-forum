@@ -1,9 +1,34 @@
-type CreateQuestionPayload {
-  questionEdge: QuestionEdge!
+type Answer implements Node {
+  """The Globally Unique ID of this object"""
+  id: ID!
+  content: String!
+  createdAt: DateTime!
+  updatedAt: DateTime
 }
 
-type CreateTodoPayload {
-  todoEdge: TodoEdge!
+type AnswerConnection {
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection"""
+  edges: [AnswerEdge!]!
+}
+
+"""An edge in a connection."""
+type AnswerEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: Answer!
+}
+
+type CreateAnswerPayload {
+  answerEdge: AnswerEdge!
+}
+
+type CreateQuestionPayload {
+  questionEdge: QuestionEdge!
 }
 
 """Date with time (isoformat)"""
@@ -11,31 +36,11 @@ scalar DateTime
 
 union DeleteQuestionPayload = Question | QuestionNotFoundError
 
-union DeleteTodoPayload = Todo | TodoNotFoundError
-
 interface Error {
   message: String!
 }
 
 type Mutation {
-  """Create a new todo."""
-  createTodo(
-    """The content of the todo."""
-    content: String!
-  ): CreateTodoPayload!
-
-  """Delete a todo by ID."""
-  deleteTodo(
-    """The ID of the todo to delete."""
-    todoId: ID!
-  ): DeleteTodoPayload!
-
-  """Toggle the completed state of a todo by ID."""
-  toggleTodoCompleted(
-    """The ID of the todo to toggle."""
-    todoId: ID!
-  ): ToggleTodoCompletedPayload!
-
   """Create a new question."""
   createQuestion(
     """The title of the question."""
@@ -50,6 +55,15 @@ type Mutation {
     """The ID of the question to delete."""
     questionId: ID!
   ): DeleteQuestionPayload!
+
+  """Create a new answer."""
+  createAnswer(
+    """The content of the answer."""
+    content: String!
+
+    """The ID of the question to create the answer under."""
+    questionId: ID!
+  ): CreateAnswerPayload!
 }
 
 """An object with a Globally Unique ID"""
@@ -79,9 +93,6 @@ type Query {
     id: ID!
   ): Node
 
-  """Get all todos available."""
-  todos(before: String = null, after: String = null, first: Int = null, last: Int = null): TodoConnection!
-
   """Get all questions available."""
   questions(before: String = null, after: String = null, first: Int = null, last: Int = null): QuestionConnection!
 }
@@ -93,6 +104,8 @@ type Question implements Node {
   description: String!
   createdAt: DateTime!
   updatedAt: DateTime
+  descriptionPreview: String!
+  answers(before: String = null, after: String = null, first: Int = null, last: Int = null): AnswerConnection!
 }
 
 type QuestionConnection {
@@ -115,35 +128,3 @@ type QuestionEdge {
 type QuestionNotFoundError implements Error {
   message: String!
 }
-
-type Todo implements Node {
-  """The Globally Unique ID of this object"""
-  id: ID!
-  content: String!
-  completed: Boolean!
-  createdAt: DateTime!
-  updatedAt: DateTime
-}
-
-type TodoConnection {
-  """Pagination data for this connection"""
-  pageInfo: PageInfo!
-
-  """Contains the nodes in this connection"""
-  edges: [TodoEdge!]!
-}
-
-"""An edge in a connection."""
-type TodoEdge {
-  """A cursor for use in pagination"""
-  cursor: String!
-
-  """The item at the end of the edge"""
-  node: Todo!
-}
-
-type TodoNotFoundError implements Error {
-  message: String!
-}
-
-union ToggleTodoCompletedPayload = Todo | TodoNotFoundError

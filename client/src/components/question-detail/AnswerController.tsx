@@ -11,16 +11,17 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Textarea } from "../ui/textarea";
-import { TodoControllerFragment$key } from "./__generated__/TodoControllerFragment.graphql";
+import { AnswerControllerFragment$key } from "./__generated__/AnswerControllerFragment.graphql";
 
-const TodoControllerFragment = graphql`
-  fragment TodoControllerFragment on Query
+const AnswerControllerFragment = graphql`
+  fragment AnswerControllerFragment on Question
   @argumentDefinitions(
     cursor: { type: "String" }
     count: { type: "Int", defaultValue: 5 }
   ) {
-    todos(after: $cursor, first: $count)
-      @connection(key: "TodoListFragment_todos") {
+    id
+    answers(after: $cursor, first: $count)
+      @connection(key: "AnswerListFragment_answers") {
       __id
       edges {
         # we have to select the edges field while
@@ -31,48 +32,53 @@ const TodoControllerFragment = graphql`
   }
 `;
 
-const TodoControllerCreateMutation = graphql`
-  mutation TodoControllerCreateMutation(
+const AnswerControllerCreateMutation = graphql`
+  mutation AnswerControllerCreateMutation(
     $content: String!
+    $questionId: ID!
     $connections: [ID!]!
   ) {
-    createTodo(content: $content) {
-      todoEdge @prependEdge(connections: $connections) {
+    createAnswer(content: $content, questionId: $questionId) {
+      answerEdge @prependEdge(connections: $connections) {
         node {
-          ...TodoFragment
+          ...AnswerFragment
         }
       }
     }
   }
 `;
 
-const createTodoSchema = z.object({
-  content: z.string().min(1, { message: "content is required" }).max(250, {
-    message: "content cannot be more than 250 characters",
+const createAnswerSchema = z.object({
+  content: z.string().min(1, { message: "content is required" }).max(500, {
+    message: "content cannot be more than 500 characters",
   }),
 });
 
 type Props = {
-  rootQuery: TodoControllerFragment$key;
+  question: AnswerControllerFragment$key;
 };
 
-export default function TodoController({ rootQuery }: Props) {
-  const data = useFragment(TodoControllerFragment, rootQuery);
+export default function AnswerController({ question }: Props) {
+  const data = useFragment(AnswerControllerFragment, question);
   const [commitMutation, isMutationInFlight] = useMutation(
-    TodoControllerCreateMutation
+    AnswerControllerCreateMutation
   );
 
-  const form = useForm<z.infer<typeof createTodoSchema>>({
-    resolver: zodResolver(createTodoSchema),
+  const form = useForm<z.infer<typeof createAnswerSchema>>({
+    resolver: zodResolver(createAnswerSchema),
     values: { content: "" },
   });
 
-  const onSubmit: SubmitHandler<z.infer<typeof createTodoSchema>> = async (
+  const onSubmit: SubmitHandler<z.infer<typeof createAnswerSchema>> = async (
     input
   ) => {
     form.reset();
     commitMutation({
-      variables: { content: input.content, connections: [data.todos.__id] },
+      variables: {
+        content: input.content,
+        questionId: data.id,
+        connections: [data.answers.__id],
+      },
     });
   };
 
@@ -80,7 +86,7 @@ export default function TodoController({ rootQuery }: Props) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-4 w-full px-4"
+        className="flex flex-col gap-4 w-full"
       >
         <FormField
           control={form.control}
@@ -89,7 +95,8 @@ export default function TodoController({ rootQuery }: Props) {
             <FormItem>
               <FormControl>
                 <Textarea
-                  placeholder="write here..."
+                  rows={5}
+                  placeholder="write your answer here..."
                   className="resize-none"
                   {...field}
                 />
@@ -99,7 +106,7 @@ export default function TodoController({ rootQuery }: Props) {
           )}
         />
         <Button type="submit" disabled={isMutationInFlight}>
-          Create todo
+          Submit an answer
         </Button>
       </form>
     </Form>

@@ -6,9 +6,13 @@ from aioinject.ext.strawberry import inject
 from result import Err
 from strawberry import relay
 
+from app.scalars import ID
+
 from .exceptions import QuestionNotFoundError
-from .services import QuestionService
+from .services import AnswerService, QuestionService
 from .types import (
+    AnswerType,
+    CreateAnswerPayload,
     CreateQuestionPayload,
     DeleteQuestionPayload,
     QuestionNotFoundErrorType,
@@ -78,4 +82,40 @@ class QuestionMutation:
 
         return QuestionType.from_orm(
             question=result.ok_value,
+        )
+
+    @strawberry.mutation(  # type: ignore[misc]
+        graphql_type=CreateAnswerPayload,
+        description="Create a new answer.",
+    )
+    @inject
+    async def create_answer(
+        self,
+        content: Annotated[
+            str,
+            strawberry.argument(
+                description="The content of the answer.",
+            ),
+        ],
+        question_id: Annotated[
+            ID,
+            strawberry.argument(
+                description="The ID of the question to create the answer under.",
+            ),
+        ],
+        answer_service: Annotated[AnswerService, Inject],
+    ) -> CreateAnswerPayload:
+        """Create a new answer."""
+        result = await answer_service.create(
+            content=content,
+            question_id=int(question_id.node_id),
+        )
+
+        answer = result.unwrap()
+
+        return CreateAnswerPayload(
+            answer_edge=relay.Edge(
+                node=AnswerType.from_orm(answer),
+                cursor=relay.to_base64(AnswerType, answer.id),
+            ),
         )

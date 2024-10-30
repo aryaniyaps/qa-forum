@@ -4,11 +4,11 @@ import { graphql, useFragment, useMutation } from "react-relay";
 import { z } from "zod";
 import { Button } from "../ui/button";
 import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormMessage,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
@@ -52,9 +52,12 @@ const createQuestionSchema = z.object({
   title: z.string().min(1, { message: "title is required" }).max(250, {
     message: "title cannot be more than 250 characters",
   }),
-  description: z.string().min(1, { message: "description is required" }).max(425, {
-    message: "description cannot be more than 425 characters",
-  })
+  description: z
+    .string()
+    .min(1, { message: "description is required" })
+    .max(425, {
+      message: "description cannot be more than 425 characters",
+    }),
 });
 
 type Props = {
@@ -77,7 +80,11 @@ export default function QuestionController({ rootQuery }: Props) {
   ) => {
     form.reset();
     commitMutation({
-      variables: { title: input.title, description: input.description, connections: [data.questions.__id] },
+      variables: {
+        title: input.title,
+        description: input.description,
+        connections: [data.questions.__id],
+      },
     });
   };
 
@@ -87,7 +94,7 @@ export default function QuestionController({ rootQuery }: Props) {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-4 w-full px-4"
       >
-                <FormField
+        <FormField
           control={form.control}
           name="title"
           render={({ field }) => (
@@ -110,6 +117,7 @@ export default function QuestionController({ rootQuery }: Props) {
             <FormItem>
               <FormControl>
                 <Textarea
+                  rows={15}
                   placeholder="write more about your question here..."
                   className="resize-none"
                   {...field}

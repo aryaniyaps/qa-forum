@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database.paginator import PaginatedResult, Paginator
 
-from .models import Question
+from .models import Answer, Question
 
 
 class QuestionRepo:
@@ -73,4 +73,73 @@ class QuestionRepo:
     async def delete(self, question: Question) -> None:
         """Delete a question by ID."""
         await self._session.delete(question)
+        await self._session.flush()
+
+
+class AnswerRepo:
+    def __init__(self, session: AsyncSession) -> None:
+        self._session = session
+
+    async def create(self, question_id: int, content: str) -> Answer:
+        """Create a new answer."""
+        answer = Answer(question_id=question_id, content=content)
+        self._session.add(answer)
+        await self._session.flush()
+        return answer
+
+    async def get(self, answer_id: int) -> Answer | None:
+        """Get answer by ID."""
+        return await self._session.scalar(
+            select(Answer).where(
+                Answer.id == answer_id,
+            ),
+        )
+
+    async def update(
+        self,
+        answer: Answer,
+        *,
+        content: str,
+    ) -> Answer:
+        """Update the given answer."""
+        answer.content = content
+        self._session.add(answer)
+        await self._session.flush()
+        return answer
+
+    async def get_many_by_ids(self, answer_ids: list[int]) -> list[Answer | None]:
+        """Get multiple answers by IDs."""
+        stmt = select(Answer).where(Answer.id.in_(answer_ids))
+        answer_by_id = {
+            answer.id: answer for answer in await self._session.scalars(stmt)
+        }
+
+        return [answer_by_id.get(answer_id) for answer_id in answer_ids]
+
+    async def get_all(
+        self,
+        question_id: int,
+        first: int | None = None,
+        last: int | None = None,
+        before: int | None = None,
+        after: int | None = None,
+    ) -> PaginatedResult[Answer, int]:
+        """Get a paginated result of answers for the given question ID."""
+        paginator: Paginator[Answer, int] = Paginator(
+            session=self._session,
+            paginate_by=Answer.id,
+            reverse=True,
+        )
+
+        return await paginator.paginate(
+            statement=select(Answer).where(Answer.question_id == question_id),
+            first=first,
+            last=last,
+            before=before,
+            after=after,
+        )
+
+    async def delete(self, answer: Answer) -> None:
+        """Delete a answer by ID."""
+        await self._session.delete(answer)
         await self._session.flush()

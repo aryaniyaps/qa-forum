@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6f0184b00cba4a96315df476d407f7f5>>
+ * @generated SignedSource<<682953961f435e3762e5b9fc85a1d894>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,23 +10,23 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type QuestionControllerCreateMutation$variables = {
+export type AnswerControllerCreateMutation$variables = {
   connections: ReadonlyArray<string>;
-  description: string;
-  title: string;
+  content: string;
+  questionId: string;
 };
-export type QuestionControllerCreateMutation$data = {
-  readonly createQuestion: {
-    readonly questionEdge: {
+export type AnswerControllerCreateMutation$data = {
+  readonly createAnswer: {
+    readonly answerEdge: {
       readonly node: {
-        readonly " $fragmentSpreads": FragmentRefs<"QuestionFragment">;
+        readonly " $fragmentSpreads": FragmentRefs<"AnswerFragment">;
       };
     };
   };
 };
-export type QuestionControllerCreateMutation = {
-  response: QuestionControllerCreateMutation$data;
-  variables: QuestionControllerCreateMutation$variables;
+export type AnswerControllerCreateMutation = {
+  response: AnswerControllerCreateMutation$data;
+  variables: AnswerControllerCreateMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -38,23 +38,23 @@ var v0 = {
 v1 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "description"
+  "name": "content"
 },
 v2 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "title"
+  "name": "questionId"
 },
 v3 = [
   {
     "kind": "Variable",
-    "name": "description",
-    "variableName": "description"
+    "name": "content",
+    "variableName": "content"
   },
   {
     "kind": "Variable",
-    "name": "title",
-    "variableName": "title"
+    "name": "questionId",
+    "variableName": "questionId"
   }
 ];
 return {
@@ -66,28 +66,28 @@ return {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "QuestionControllerCreateMutation",
+    "name": "AnswerControllerCreateMutation",
     "selections": [
       {
         "alias": null,
         "args": (v3/*: any*/),
-        "concreteType": "CreateQuestionPayload",
+        "concreteType": "CreateAnswerPayload",
         "kind": "LinkedField",
-        "name": "createQuestion",
+        "name": "createAnswer",
         "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
-            "concreteType": "QuestionEdge",
+            "concreteType": "AnswerEdge",
             "kind": "LinkedField",
-            "name": "questionEdge",
+            "name": "answerEdge",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "Question",
+                "concreteType": "Answer",
                 "kind": "LinkedField",
                 "name": "node",
                 "plural": false,
@@ -95,7 +95,7 @@ return {
                   {
                     "args": null,
                     "kind": "FragmentSpread",
-                    "name": "QuestionFragment"
+                    "name": "AnswerFragment"
                   }
                 ],
                 "storageKey": null
@@ -113,33 +113,33 @@ return {
   "kind": "Request",
   "operation": {
     "argumentDefinitions": [
-      (v2/*: any*/),
       (v1/*: any*/),
+      (v2/*: any*/),
       (v0/*: any*/)
     ],
     "kind": "Operation",
-    "name": "QuestionControllerCreateMutation",
+    "name": "AnswerControllerCreateMutation",
     "selections": [
       {
         "alias": null,
         "args": (v3/*: any*/),
-        "concreteType": "CreateQuestionPayload",
+        "concreteType": "CreateAnswerPayload",
         "kind": "LinkedField",
-        "name": "createQuestion",
+        "name": "createAnswer",
         "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
-            "concreteType": "QuestionEdge",
+            "concreteType": "AnswerEdge",
             "kind": "LinkedField",
-            "name": "questionEdge",
+            "name": "answerEdge",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "Question",
+                "concreteType": "Answer",
                 "kind": "LinkedField",
                 "name": "node",
                 "plural": false,
@@ -155,14 +155,7 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "title",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "descriptionPreview",
+                    "name": "content",
                     "storageKey": null
                   },
                   {
@@ -192,7 +185,7 @@ return {
             "handle": "prependEdge",
             "key": "",
             "kind": "LinkedHandle",
-            "name": "questionEdge",
+            "name": "answerEdge",
             "handleArgs": [
               {
                 "kind": "Variable",
@@ -207,16 +200,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b84b5b4ca9be9dd64844e6969c5511f0",
+    "cacheID": "75dbb14bc9a2a51e4fd8b13260be159c",
     "id": null,
     "metadata": {},
-    "name": "QuestionControllerCreateMutation",
+    "name": "AnswerControllerCreateMutation",
     "operationKind": "mutation",
-    "text": "mutation QuestionControllerCreateMutation(\n  $title: String!\n  $description: String!\n) {\n  createQuestion(title: $title, description: $description) {\n    questionEdge {\n      node {\n        ...QuestionFragment\n        id\n      }\n    }\n  }\n}\n\nfragment QuestionFragment on Question {\n  id\n  title\n  descriptionPreview\n  createdAt\n  updatedAt\n}\n"
+    "text": "mutation AnswerControllerCreateMutation(\n  $content: String!\n  $questionId: ID!\n) {\n  createAnswer(content: $content, questionId: $questionId) {\n    answerEdge {\n      node {\n        ...AnswerFragment\n        id\n      }\n    }\n  }\n}\n\nfragment AnswerFragment on Answer {\n  id\n  content\n  createdAt\n  updatedAt\n}\n"
   }
 };
 })();
 
-(node as any).hash = "39652e8b968a86cd53ce6be1c93f3cf4";
+(node as any).hash = "647faf0292d4ad62ec2d4e7482fe8cbf";
 
 export default node;
