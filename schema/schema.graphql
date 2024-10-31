@@ -115,6 +115,9 @@ type Query {
 
   """Get all questions available."""
   questions(before: ID = null, after: ID = null, first: Int = null, last: Int = null): QuestionConnection!
+
+  """Get the current user."""
+  viewer: User!
 }
 
 type Question implements Node {
@@ -150,6 +153,14 @@ type QuestionEdge {
 
 type QuestionNotFoundError implements Error {
   message: String!
+}
+
+type User implements Node {
+  """The Globally Unique ID of this object"""
+  id: ID!
+  username: String!
+  createdAt: DateTime!
+  updatedAt: DateTime
 }
 
 type VoteQuestionPayload {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<291fe79ed9bded31da81b3a6bb3155b4>>
+ * @generated SignedSource<<9fedd5c4dfcbfaaeb10e077d55f042e6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,7 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type HomePageQuery$variables = Record<PropertyKey, never>;
 export type HomePageQuery$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"QuestionControllerFragment" | "QuestionListFragment">;
+  readonly " $fragmentSpreads": FragmentRefs<"NavBarFragment" | "QuestionControllerFragment" | "QuestionListFragment">;
 };
 export type HomePageQuery = {
   response: HomePageQuery$data;
@@ -28,6 +28,13 @@ var v0 = [
   }
 ],
 v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -50,6 +57,11 @@ return {
         "args": null,
         "kind": "FragmentSpread",
         "name": "QuestionControllerFragment"
+      },
+      {
+        "args": null,
+        "kind": "FragmentSpread",
+        "name": "NavBarFragment"
       }
     ],
     "type": "Query",
@@ -85,13 +97,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "id",
-                    "storageKey": null
-                  },
+                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -134,7 +140,7 @@ return {
                     "name": "updatedAt",
                     "storageKey": null
                   },
-                  (v1/*: any*/)
+                  (v2/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -145,7 +151,7 @@ return {
                 "name": "cursor",
                 "storageKey": null
               },
-              (v1/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": null
           },
@@ -197,20 +203,39 @@ return {
         "key": "QuestionListFragment_questions",
         "kind": "LinkedHandle",
         "name": "questions"
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "User",
+        "kind": "LinkedField",
+        "name": "viewer",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "username",
+            "storageKey": null
+          },
+          (v1/*: any*/)
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "75fe0703f00a8942decd748f8b73ff8c",
+    "cacheID": "1c76c7e0af258857a3e8e5059c32f657",
     "id": null,
     "metadata": {},
     "name": "HomePageQuery",
     "operationKind": "query",
-    "text": "query HomePageQuery {\n  ...QuestionListFragment\n  ...QuestionControllerFragment\n}\n\nfragment QuestionControllerFragment on Query {\n  questions(first: 5) {\n    edges {\n      __typename\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment QuestionFragment on Question {\n  id\n  title\n  descriptionPreview\n  answersCount\n  votesCount\n  createdAt\n  updatedAt\n}\n\nfragment QuestionListFragment on Query {\n  questions(first: 5) {\n    edges {\n      node {\n        id\n        ...QuestionFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
+    "text": "query HomePageQuery {\n  ...QuestionListFragment\n  ...QuestionControllerFragment\n  ...NavBarFragment\n}\n\nfragment NavBarFragment on Query {\n  viewer {\n    username\n    id\n  }\n}\n\nfragment QuestionControllerFragment on Query {\n  questions(first: 5) {\n    edges {\n      __typename\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment QuestionFragment on Question {\n  id\n  title\n  descriptionPreview\n  answersCount\n  votesCount\n  createdAt\n  updatedAt\n}\n\nfragment QuestionListFragment on Query {\n  questions(first: 5) {\n    edges {\n      node {\n        id\n        ...QuestionFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "0333840450158e88b04032814ad526b3";
+(node as any).hash = "27fbb1d1f03b4ec6f5a4f78a26255ab8";
 
 export default node;

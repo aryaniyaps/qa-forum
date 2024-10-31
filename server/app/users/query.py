@@ -14,4 +14,4 @@ class UserQuery:
     @inject
     async def viewer(self, info: Info) -> UserType:
         """Get the current user."""
-        return UserType.from_orm(info.context.user)
+        return UserType.from_orm(info.context["user"])

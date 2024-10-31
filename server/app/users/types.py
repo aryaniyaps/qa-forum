@@ -11,7 +11,7 @@ from app.users.models import User
 
 @strawberry.type(name="User")
 class UserType(BaseNodeType[User]):
-    email: str
+    username: str
     created_at: datetime
     updated_at: datetime | None
 
@@ -20,7 +20,7 @@ class UserType(BaseNodeType[User]):
         """Construct a node from an ORM instance."""
         return cls(
             id=user.id,
-            email=user.email,
+            username=user.username,
             created_at=user.created_at,
             updated_at=user.updated_at,
         )
