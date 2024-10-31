@@ -1,16 +1,16 @@
 services:
-  # caddy:
-  #   image: "caddy:2.8.4-alpine"
-  #   restart: unless-stopped
-  #   cap_add:
-  #     - NET_ADMIN
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #     - "443:443/udp"
-  #   volumes:
-  #     - ./Caddyfile:/etc/caddy/Caddyfile
-  #     - caddy_config:/config
+  caddy:
+    image: "caddy:2.8.4-alpine"
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_config:/config
 
   postgres:
     image: "bitnami/postgresql:16"
@@ -23,42 +23,36 @@ services:
     volumes:
       - "postgres_data:/bitnami/postgresql"
 
-  mailhog:
-    image: mailhog/mailhog:v1.0.1
+  server:
+    build:
+      context: ./server
     ports:
-      - "1025:1025"
-      - "8025:8025"
+      - "8000:8000"
+    environment:
+      - SERVER_DEBUG=False
+      - SERVER_ENVIRONMENT=production
+      - SERVER_HOST=0.0.0.0
+      - SERVER_PORT=8000
+      - SERVER_LOG_LEVEL=INFO
+      - SERVER_CORS_ALLOW_ORIGINS=["http://localhost", "http://127.0.0.1", "https://localhost", "https://127.0.0.1"]
+      - SERVER_OPENAPI_URL=
+      - SERVER_DATABASE_URL=postgresql+asyncpg://user:pass@postgres:5432/todos
+      - SERVER_DATABASE_POOL_SIZE=20
+      - SERVER_ROOT_PATH="/api"
+    depends_on:
+      - postgres
 
-  # server:
-  #   build:
-  #     context: ./server
-  #   ports:
-  #     - "8000:8000"
-  #   environment:
-  #     - SERVER_DEBUG=False
-  #     - SERVER_ENVIRONMENT=production
-  #     - SERVER_HOST=0.0.0.0
-  #     - SERVER_PORT=8000
-  #     - SERVER_LOG_LEVEL=INFO
-  #     - SERVER_CORS_ALLOW_ORIGINS=["http://localhost", "http://127.0.0.1", "https://localhost", "https://127.0.0.1"]
-  #     - SERVER_OPENAPI_URL=
-  #     - SERVER_DATABASE_URL=postgresql+asyncpg://user:pass@postgres:5432/todos
-  #     - SERVER_DATABASE_POOL_SIZE=20
-  #     - SERVER_ROOT_PATH="/api"
-  #   depends_on:
-  #     - postgres
-
-  # client:
-  #   image: client
-  #   build:
-  #     context: ./client
-  #   environment:
-  #     NODE_ENV: production
-  #     VITE_API_URL: "/api/graphql/"
-  #   ports:
-  #     - 3000:3000
-  #   depends_on:
-  #     - server
+  client:
+    image: client
+    build:
+      context: ./client
+    environment:
+      NODE_ENV: production
+      VITE_API_URL: "/api/graphql/"
+    ports:
+      - 3000:3000
+    depends_on:
+      - server
 
 volumes:
   postgres_data:

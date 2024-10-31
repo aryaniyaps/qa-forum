@@ -86,9 +86,11 @@ CREATE TABLE question_votes (
 
    - Navigate to the server directory:
 
-   ```bash
-   cd server
-   ```
+     ```bash
+     cd server
+     ```
+
+   - Create an `.env` file following the reference template `./.env.example`.
 
    - Install dependencies:
      ```bash
@@ -104,10 +106,15 @@ CREATE TABLE question_votes (
      ```
 
 4. **Install frontend dependencies and start the client**:
+
    - Navigate to the client directory:
+
      ```bash
      cd client
      ```
+
+   - Create an `.env` file following the reference template `./.env.example`.
+
    - Install dependencies:
      ```bash
      pnpm install
@@ -137,4 +144,4 @@ Contributions are welcome! Please submit a pull request or file an issue if you 
 
 ## License
 
-This project is licensed under the MIT License.
+See the project license [here](./LICENSE.md)

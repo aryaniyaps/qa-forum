@@ -81,39 +81,6 @@ class Settings(BaseSettings):
 
     root_path: str = ""
 
-    # email config
-
-    email_port: Annotated[
-        int,
-        Field(
-            examples=[
-                587,
-            ],
-        ),
-    ] = 587
-
-    email_host: Annotated[
-        str,
-        Field(
-            examples=[
-                "localhost",
-            ],
-        ),
-    ]
-
-    email_username: str | None = None
-
-    email_password: SecretStr | None = None
-
-    email_from: Annotated[
-        str,
-        Field(
-            examples=[
-                "aryaniyaps@example.com",
-            ],
-        ),
-    ]
-
     model_config = SettingsConfigDict(
         env_file=".env",
         env_prefix="server_",
