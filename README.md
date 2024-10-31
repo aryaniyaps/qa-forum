@@ -71,8 +71,7 @@ CREATE TABLE question_votes (
 1. **Clone the repository**:
 
    ```bash
-   git clone <repository-url>
-   cd qa-forum
+   git clone https://github.com/aryaniyaps/qa-forum
    ```
 
 2. **Set up PostgreSQL with Docker Compose**:
@@ -85,6 +84,12 @@ CREATE TABLE question_votes (
 
 3. **Install backend dependencies and start the server**:
 
+   - Navigate to the server directory:
+
+   ```bash
+   cd server
+   ```
+
    - Install dependencies:
      ```bash
      pdm install
@@ -95,7 +100,7 @@ CREATE TABLE question_votes (
      ```
    - Start the backend server:
      ```bash
-     pdm dev
+     pdm run dev
      ```
 
 4. **Install frontend dependencies and start the client**:
