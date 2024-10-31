@@ -11,7 +11,7 @@ class QuestionVoteRepo:
     def __init__(self, session: AsyncSession) -> None:
         self._session = session
 
-    async def get(self, question_id: int, user_id: str) -> QuestionVote | None:
+    async def get(self, question_id: int, user_id: int) -> QuestionVote | None:
         """Get question vote by ID."""
         return await self._session.scalar(
             select(QuestionVote).where(
@@ -23,7 +23,7 @@ class QuestionVoteRepo:
     async def create(
         self,
         question: Question,
-        user_id: str,
+        user_id: int,
         vote_type: VoteType,
     ) -> QuestionVote:
         """Create a new question vote."""
@@ -48,7 +48,7 @@ class QuestionVoteRepo:
         await self._session.commit()
         return question_vote
 
-    async def delete(self, question_id: int, user_id: str) -> None:
+    async def delete(self, question_id: int, user_id: int) -> None:
         """Delete a question vote."""
         await self._session.execute(
             delete(QuestionVote).where(
@@ -63,10 +63,14 @@ class QuestionRepo:
     def __init__(self, session: AsyncSession) -> None:
         self._session = session
 
-    async def create(self, title: str, description: str) -> Question:
+    async def create(self, title: str, description: str, user_id: int) -> Question:
         """Create a new question."""
         async with self._session as session:
-            question = Question(title=title, description=description)
+            question = Question(
+                title=title,
+                description=description,
+                user_id=user_id,
+            )
             session.add(question)
 
             await session.flush()  # Ensures question ID is generated before refresh
@@ -139,9 +143,9 @@ class AnswerRepo:
     def __init__(self, session: AsyncSession) -> None:
         self._session = session
 
-    async def create(self, question_id: int, content: str) -> Answer:
+    async def create(self, question_id: int, content: str, user_id: int) -> Answer:
         """Create a new answer."""
-        answer = Answer(question_id=question_id, content=content)
+        answer = Answer(question_id=question_id, content=content, user_id=user_id)
         self._session.add(answer)
         await self._session.commit()
         return answer

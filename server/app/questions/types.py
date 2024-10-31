@@ -40,7 +40,7 @@ class AnswerType(BaseNodeType[Answer]):
         node_ids: Iterable[str],
         required: bool = False,  # noqa: ARG003
     ):
-        answers = await info.context.loaders.answer_by_id.load_many(node_ids)
+        answers = await info.context["loaders"].answer_by_id.load_many(node_ids)
         return [
             cls.from_orm(answer) if answer is not None else answer for answer in answers
         ]
@@ -106,7 +106,7 @@ class QuestionType(BaseNodeType[Question]):
         """The vote of the current user for this question."""
         existing_vote = await question_vote_repo.get(
             question_id=self.id,
-            user_id=info.context.user_id,
+            user_id=info.context["user"].id,
         )
         if not existing_vote:
             return None
@@ -160,7 +160,7 @@ class QuestionType(BaseNodeType[Question]):
         node_ids: Iterable[str],
         required: bool = False,  # noqa: ARG003
     ):
-        questions = await info.context.loaders.question_by_id.load_many(node_ids)
+        questions = await info.context["loaders"].question_by_id.load_many(node_ids)
         return [
             cls.from_orm(question) if question is not None else question
             for question in questions

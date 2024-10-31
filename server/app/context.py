@@ -1,16 +1,15 @@
-import dataclasses
+from typing import TypedDict
 
-from fastapi import Request, Response, WebSocket
+from fastapi import Request
 from strawberry.types import Info as StrawberryInfo
 
 from app.dataloaders import Dataloaders
+from app.users.models import User
 
 
-@dataclasses.dataclass
-class Context:
-    user_id: str
-    request: Request | WebSocket
-    response: Response | None
+class Context(TypedDict):
+    user: User
+    request: Request
     loaders: Dataloaders
 
 

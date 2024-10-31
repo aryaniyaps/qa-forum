@@ -10,7 +10,7 @@ from .repositories import QuestionRepo
 from .types import QuestionConnectionType
 
 
-@strawberry.type(name="Viewer")
+@strawberry.type
 class QuestionQuery:
     @strawberry.field(  # type: ignore[misc]
         graphql_type=QuestionConnectionType,

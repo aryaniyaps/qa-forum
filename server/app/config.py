@@ -1,7 +1,7 @@
 from enum import StrEnum
 from typing import Annotated
 
-from pydantic import Field, PostgresDsn
+from pydantic import Field, PostgresDsn, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -80,6 +80,39 @@ class Settings(BaseSettings):
     openapi_url: str | None = None
 
     root_path: str = ""
+
+    # email config
+
+    email_port: Annotated[
+        int,
+        Field(
+            examples=[
+                587,
+            ],
+        ),
+    ] = 587
+
+    email_host: Annotated[
+        str,
+        Field(
+            examples=[
+                "localhost",
+            ],
+        ),
+    ]
+
+    email_username: str | None = None
+
+    email_password: SecretStr | None = None
+
+    email_from: Annotated[
+        str,
+        Field(
+            examples=[
+                "aryaniyaps@example.com",
+            ],
+        ),
+    ]
 
     model_config = SettingsConfigDict(
         env_file=".env",

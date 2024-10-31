@@ -1,5 +1,5 @@
 [project]
-name = "graphql-notes"
+name = "graphql-qa-forum"
 version = "0.1.0"
 description = "Default template for PDM package"
 authors = [{ name = "Aryan Iyappan", email = "aryaniyappan2006@gmail.com" }]
@@ -47,7 +47,8 @@ test = [
 [tool.pdm.scripts]
 dev = "app/server.py"
 lint = { composite = ["black .", "ruff check --fix .", "black .", "mypy ."] }
-generate-schema = "strawberry export-schema app.schema:schema --output ../schema/schema.graphql"
+generate-openapi-schema = "scripts/generate_openapi_schema.py"
+generate-graphql-schema = "strawberry export-schema app.schema:schema --output ../schema/schema.graphql"
 migrate = "alembic upgrade head"
 new-migration = "alembic revision --autogenerate"
 test = { composite = ["coverage run", "coverage report -m", "coverage xml"] }

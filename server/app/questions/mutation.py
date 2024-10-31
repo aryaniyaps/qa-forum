@@ -8,7 +8,6 @@ from strawberry import relay
 
 from app.context import Info
 from app.lib.constants import VoteType
-from app.questions.repositories import QuestionRepo
 from app.scalars import ID
 
 from .exceptions import QuestionNotFoundError
@@ -34,6 +33,7 @@ class QuestionMutation:
     @inject
     async def create_question(
         self,
+        info: Info,
         title: Annotated[
             str,
             strawberry.argument(
@@ -49,7 +49,11 @@ class QuestionMutation:
         question_service: Annotated[QuestionService, Inject],
     ) -> CreateQuestionPayload:
         """Create a new question."""
-        result = await question_service.create(title=title, description=description)
+        result = await question_service.create(
+            title=title,
+            description=description,
+            user_id=info.context["user"].id,
+        )
 
         question = result.unwrap()
 
@@ -113,7 +117,7 @@ class QuestionMutation:
     ) -> VoteQuestionPayload | QuestionNotFoundErrorType:
         """Vote for a question."""
         result = await question_service.vote_question(
-            user_id=info.context.user_id,
+            user_id=info.context["user"].id,
             question_id=int(question_id.node_id),
             vote_type=vote_type,
         )
@@ -143,7 +147,7 @@ class QuestionMutation:
     ) -> DeleteQuestionVotePayload | QuestionNotFoundErrorType:
         """Delete a question vote."""
         result = await question_service.delete_vote(
-            user_id=info.context.user_id, question_id=int(question_id.node_id)
+            user_id=info.context["user"].id, question_id=int(question_id.node_id)
         )
 
         if isinstance(result, Err):
@@ -179,6 +183,7 @@ class QuestionMutation:
         result = await answer_service.create(
             content=content,
             question_id=int(question_id.node_id),
+            user_id=info.context["user"].id,
         )
 
         answer = result.unwrap()

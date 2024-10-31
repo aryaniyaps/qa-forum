@@ -1,15 +1,20 @@
+from aioinject.ext.fastapi import AioInjectMiddleware
 from asgi_correlation_id import CorrelationIdMiddleware
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
-from app.graphql_app import create_graphql_app
-from app.middleware import user_id_middleware
+from app.container import create_container
+from app.graphql_app import create_graphql_router
+from app.middleware import set_fingerprint_middleware
 
 
 def add_routes(app: FastAPI) -> None:
     """Register routes for the app."""
-    app.mount("/graphql", create_graphql_app())
+    app.include_router(
+        create_graphql_router(),
+        prefix="/graphql",
+    )
 
 
 def add_middleware(app: FastAPI) -> None:
@@ -27,7 +32,11 @@ def add_middleware(app: FastAPI) -> None:
         header_name="X-Request-ID",
     )
 
-    app.middleware("http")(user_id_middleware)
+    app.add_middleware(
+        AioInjectMiddleware,
+        container=create_container(),
+    )
+    app.middleware("http")(set_fingerprint_middleware)
 
 
 def create_app() -> FastAPI:

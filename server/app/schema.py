@@ -7,6 +7,7 @@ from strawberry.tools import merge_types
 from app.questions.mutation import QuestionMutation
 from app.questions.query import QuestionQuery
 from app.scalars import ID
+from app.users.query import UserQuery
 
 from .base.query import BaseQuery
 from .container import create_container
@@ -16,6 +17,7 @@ query = merge_types(
     types=(
         BaseQuery,
         QuestionQuery,
+        UserQuery,
     ),
 )
 

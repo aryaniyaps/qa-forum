@@ -14,17 +14,20 @@ class QuestionService:
         self._question_repo = question_repo
         self._question_vote_repo = question_vote_repo
 
-    async def create(self, title: str, description: str) -> Result[Question, None]:
+    async def create(
+        self, title: str, description: str, user_id: int
+    ) -> Result[Question, None]:
         """Create a new question."""
         return Ok(
             await self._question_repo.create(
                 title=title,
                 description=description,
+                user_id=user_id,
             )
         )
 
     async def vote_question(
-        self, user_id: str, question_id: int, vote_type: VoteType
+        self, user_id: int, question_id: int, vote_type: VoteType
     ) -> Result[None, QuestionNotFoundError]:
         """Upvote a question."""
         existing_question = await self._question_repo.get(question_id=question_id)
@@ -47,7 +50,7 @@ class QuestionService:
         return Ok(None)
 
     async def delete_vote(
-        self, user_id: str, question_id: int
+        self, user_id: int, question_id: int
     ) -> Result[None, QuestionNotFoundError]:
         """Delete a vote from a question."""
         existing_question = await self._question_repo.get(question_id=question_id)
@@ -75,12 +78,15 @@ class AnswerService:
     def __init__(self, answer_repo: AnswerRepo) -> None:
         self._answer_repo = answer_repo
 
-    async def create(self, question_id: int, content: str) -> Result[Answer, None]:
+    async def create(
+        self, question_id: int, content: str, user_id: int
+    ) -> Result[Answer, None]:
         """Create a new answer."""
         return Ok(
             await self._answer_repo.create(
                 question_id=question_id,
                 content=content,
+                user_id=user_id,
             )
         )
 

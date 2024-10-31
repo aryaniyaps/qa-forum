@@ -23,6 +23,12 @@ services:
     volumes:
       - "postgres_data:/bitnami/postgresql"
 
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
   # server:
   #   build:
   #     context: ./server

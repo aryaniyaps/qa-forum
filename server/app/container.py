@@ -5,6 +5,7 @@ import aioinject
 from app.database.dependencies import get_session
 from app.questions.repositories import AnswerRepo, QuestionRepo, QuestionVoteRepo
 from app.questions.services import AnswerService, QuestionService
+from app.users.repositories import UserRepo
 
 
 @lru_cache
@@ -16,4 +17,5 @@ def create_container() -> aioinject.Container:
     container.register(aioinject.Scoped(QuestionVoteRepo))
     container.register(aioinject.Scoped(AnswerRepo))
     container.register(aioinject.Scoped(AnswerService))
+    container.register(aioinject.Scoped(UserRepo))
     return container

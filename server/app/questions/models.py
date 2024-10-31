@@ -16,6 +16,11 @@ class Answer(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
 
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id"),
+        nullable=False,
+    )
+
     question_id: Mapped[int] = mapped_column(
         ForeignKey("questions.id"),
         nullable=False,
@@ -35,14 +40,17 @@ class Answer(Base):
 
     question = relationship("Question", back_populates="answers")
 
-
-# Define an enumeration for vote types
+    user = relationship("User", back_populates="answers")
 
 
 class QuestionVote(Base):
     __tablename__ = "question_votes"
 
-    user_id: Mapped[str] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id"),
+        nullable=False,
+        primary_key=True,
+    )
 
     question_id: Mapped[int] = mapped_column(
         ForeignKey("questions.id"),
@@ -57,11 +65,18 @@ class QuestionVote(Base):
 
     question = relationship("Question", back_populates="votes")
 
+    user = relationship("User", back_populates="votes")
+
 
 class Question(Base):
     __tablename__ = "questions"
 
     id: Mapped[int] = mapped_column(primary_key=True)
+
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id"),
+        nullable=False,
+    )
 
     title: Mapped[str] = mapped_column(
         CITEXT(150),
@@ -92,6 +107,8 @@ class Question(Base):
         cascade="all, delete-orphan",  # This enables cascading delete
         lazy="selectin",
     )
+
+    user = relationship("User", back_populates="questions")
 
     @hybrid_property
     def answers_count(self):
