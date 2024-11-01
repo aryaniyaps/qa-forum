@@ -3,8 +3,7 @@ from typing import Annotated
 import strawberry
 from aioinject import Inject
 from aioinject.ext.strawberry import inject
-
-from app.scalars import ID
+from strawberry import relay
 
 from .repositories import QuestionRepo
 from .types import QuestionConnectionType
@@ -20,8 +19,8 @@ class QuestionQuery:
     async def questions(
         self,
         question_repo: Annotated[QuestionRepo, Inject],
-        before: ID | None = None,
-        after: ID | None = None,
+        before: relay.GlobalID | None = None,
+        after: relay.GlobalID | None = None,
         first: int | None = None,
         last: int | None = None,
     ) -> QuestionConnectionType:
