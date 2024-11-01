@@ -102,7 +102,7 @@ class QuestionMutation:
         self,
         info: Info,
         question_id: Annotated[
-            ID,
+            relay.GlobalID,
             strawberry.argument(
                 description="The ID of the question to vote for.",
             ),
@@ -138,7 +138,7 @@ class QuestionMutation:
         self,
         info: Info,
         question_id: Annotated[
-            ID,
+            relay.GlobalID,
             strawberry.argument(
                 description="The ID of the question to remove the vote for.",
             ),
@@ -172,7 +172,7 @@ class QuestionMutation:
             ),
         ],
         question_id: Annotated[
-            ID,
+            relay.GlobalID,
             strawberry.argument(
                 description="The ID of the question to create the answer under.",
             ),

@@ -121,8 +121,8 @@ class QuestionType(BaseNodeType[Question]):
             AnswerRepo,
             Inject,
         ],
-        before: ID | None = None,
-        after: ID | None = None,
+        before: relay.GlobalID | None = None,
+        after: relay.GlobalID | None = None,
         first: int | None = None,
         last: int | None = None,
     ) -> AnswerConnectionType:
