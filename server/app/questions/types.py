@@ -13,7 +13,6 @@ from app.database.paginator import PaginatedResult
 from app.lib.constants import VoteType
 from app.questions.models import Answer, Question
 from app.questions.repositories import AnswerRepo, QuestionVoteRepo
-from app.scalars import ID
 
 
 @strawberry.type(name="Answer")
