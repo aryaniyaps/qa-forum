@@ -1,5 +1,3 @@
-from uuid import uuid4
-
 from aioinject import Injected
 from aioinject.ext.fastapi import inject
 from fastapi import Request

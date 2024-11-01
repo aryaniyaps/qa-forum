@@ -20,12 +20,6 @@ FROM base AS build
 COPY --from=prod-deps /app/node_modules /app/node_modules
 RUN pnpm install --frozen-lockfile
 
-# Define the build arguments
-ARG VITE_API_URL
-
-# Set the environment variables for the build
-ENV VITE_API_URL=${VITE_API_URL}
-
 # Build the application
 RUN pnpm run build
 

@@ -1,6 +1,8 @@
-# QA Forum
+# QA Forum (Anonymous)
 
-QA Forum is an anonymous question-answer platform where users can post questions, provide answers, and upvote or downvote questions. The app ensures user anonymity through browser fingerprinting, which uniquely identifies users without the need for personal information.
+![preview](./assets/preview.png)
+
+> QA Forum is an anonymous question-answer platform where users can post questions, provide answers, and upvote or downvote questions. The app ensures user anonymity through browser fingerprinting, which uniquely identifies users without the need for personal information.
 
 ## Features
 
@@ -137,6 +139,8 @@ CREATE TABLE question_votes (
 ## Usage
 
 Once the servers are running, open your browser to the frontend's URL to access the QA Forum. Users can ask questions and submit answers, and vote on questions anonymously.
+
+You can visit the site at https://localhost when deploying with Docker Compose
 
 ## Contributing
 

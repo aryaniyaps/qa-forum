@@ -1,5 +1,7 @@
 localhost {
-	reverse_proxy /api/* server:8000
+	handle_path /api/* {
+		reverse_proxy server:8000
+	}
 
 	reverse_proxy client:3000
 }

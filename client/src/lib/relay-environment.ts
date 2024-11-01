@@ -25,6 +25,7 @@ function fetchFunction(params: RequestParameters, variables: Variables) {
       "Content-Type": "application/json",
     },
     credentials: "include", // Ensure cookies are sent with requests
+    mode: "cors",
     body: JSON.stringify({
       query: params.text,
       variables,
