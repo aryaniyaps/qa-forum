@@ -9,6 +9,7 @@
 - **Anonymous Questions and Answers**: Users can anonymously post questions and respond with answers.
 - **Upvote/Downvote Mechanism**: Vote on questions to highlight useful content.
 - **User Identification via Browser Fingerprinting**: No personal data is required; users are identified solely by a unique fingerprint.
+- **Automated Audit Logging**: User actions are logged using PostgreSQL functions and triggers.
 
 ## Tech Stack
 
