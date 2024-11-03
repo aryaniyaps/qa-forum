@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<977c6c2fca57382aa4a3bdc9ef877744>>
+ * @generated SignedSource<<deb99985d81bcdc73b3b1f5e54700e7b>>
+ * @relayHash 95ea275d600f614ccdd18182e730dd2e
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 95ea275d600f614ccdd18182e730dd2e
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -290,12 +293,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "95ea275d600f614ccdd18182e730dd2e",
-    "id": null,
+    "id": "95ea275d600f614ccdd18182e730dd2e",
     "metadata": {},
     "name": "QuestionDetailPageQuery",
     "operationKind": "query",
-    "text": "query QuestionDetailPageQuery(\n  $questionId: ID!\n) {\n  node(id: $questionId) {\n    __typename\n    ... on Question {\n      ...AnswerCountFragment\n      ...AnswerListFragment\n      ...AnswerControllerFragment\n      ...QuestionDetailsFragment\n    }\n    id\n  }\n}\n\nfragment AnswerControllerFragment on Question {\n  id\n  answers(first: 5) {\n    edges {\n      __typename\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment AnswerCountFragment on Question {\n  answersCount\n}\n\nfragment AnswerFragment on Answer {\n  id\n  content\n  createdAt\n  updatedAt\n}\n\nfragment AnswerListFragment on Question {\n  answers(first: 5) {\n    edges {\n      node {\n        id\n        ...AnswerFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n  id\n}\n\nfragment QuestionDetailsFragment on Question {\n  id\n  title\n  description\n  votesCount\n  currentUserVote\n  createdAt\n}\n"
+    "text": null
   }
 };
 })();

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<9fedd5c4dfcbfaaeb10e077d55f042e6>>
+ * @generated SignedSource<<de8fd2dbe96ceb5611e669108e45e25e>>
+ * @relayHash 1c76c7e0af258857a3e8e5059c32f657
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 1c76c7e0af258857a3e8e5059c32f657
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -226,12 +229,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1c76c7e0af258857a3e8e5059c32f657",
-    "id": null,
+    "id": "1c76c7e0af258857a3e8e5059c32f657",
     "metadata": {},
     "name": "HomePageQuery",
     "operationKind": "query",
-    "text": "query HomePageQuery {\n  ...QuestionListFragment\n  ...QuestionControllerFragment\n  ...NavBarFragment\n}\n\nfragment NavBarFragment on Query {\n  viewer {\n    username\n    id\n  }\n}\n\nfragment QuestionControllerFragment on Query {\n  questions(first: 5) {\n    edges {\n      __typename\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment QuestionFragment on Question {\n  id\n  title\n  descriptionPreview\n  answersCount\n  votesCount\n  createdAt\n  updatedAt\n}\n\nfragment QuestionListFragment on Query {\n  questions(first: 5) {\n    edges {\n      node {\n        id\n        ...QuestionFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

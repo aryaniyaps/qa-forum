@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<930432a79b5543e400f0efb44664af3a>>
+ * @generated SignedSource<<c0b8fd60a733a9dbe0bc9f15b8d5b6cc>>
+ * @relayHash 21b9a64249ce66c5b8eae2f630319595
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 21b9a64249ce66c5b8eae2f630319595
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -225,12 +228,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "21b9a64249ce66c5b8eae2f630319595",
-    "id": null,
+    "id": "21b9a64249ce66c5b8eae2f630319595",
     "metadata": {},
     "name": "QuestionListPaginationQuery",
     "operationKind": "query",
-    "text": "query QuestionListPaginationQuery(\n  $count: Int = 5\n  $cursor: ID\n) {\n  ...QuestionListFragment_1G22uz\n}\n\nfragment QuestionFragment on Question {\n  id\n  title\n  descriptionPreview\n  answersCount\n  votesCount\n  createdAt\n  updatedAt\n}\n\nfragment QuestionListFragment_1G22uz on Query {\n  questions(after: $cursor, first: $count) {\n    edges {\n      node {\n        id\n        ...QuestionFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

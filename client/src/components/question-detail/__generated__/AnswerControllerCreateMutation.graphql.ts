@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<462ebd670bf571c3f7bd1a04f75c2657>>
+ * @generated SignedSource<<2f1378f3090a301d7692be9cf576dd75>>
+ * @relayHash f6a890ad3252574f075a4038f9794157
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID f6a890ad3252574f075a4038f9794157
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -264,12 +267,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f6a890ad3252574f075a4038f9794157",
-    "id": null,
+    "id": "f6a890ad3252574f075a4038f9794157",
     "metadata": {},
     "name": "AnswerControllerCreateMutation",
     "operationKind": "mutation",
-    "text": "mutation AnswerControllerCreateMutation(\n  $content: String!\n  $questionId: ID!\n) {\n  createAnswer(content: $content, questionId: $questionId) {\n    question {\n      ...QuestionFragment\n      id\n    }\n    answerEdge {\n      node {\n        ...AnswerFragment\n        id\n      }\n    }\n  }\n}\n\nfragment AnswerFragment on Answer {\n  id\n  content\n  createdAt\n  updatedAt\n}\n\nfragment QuestionFragment on Question {\n  id\n  title\n  descriptionPreview\n  answersCount\n  votesCount\n  createdAt\n  updatedAt\n}\n"
+    "text": null
   }
 };
 })();

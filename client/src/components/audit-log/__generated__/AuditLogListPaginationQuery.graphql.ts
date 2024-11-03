@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<db247f65bd3c972a28b503df98346593>>
+ * @generated SignedSource<<773742b60a535dd84256f9ed4f4418fb>>
+ * @relayHash b01d8c53417996ee1e7864e02ec4dfdc
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID b01d8c53417996ee1e7864e02ec4dfdc
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -225,12 +228,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b01d8c53417996ee1e7864e02ec4dfdc",
-    "id": null,
+    "id": "b01d8c53417996ee1e7864e02ec4dfdc",
     "metadata": {},
     "name": "AuditLogListPaginationQuery",
     "operationKind": "query",
-    "text": "query AuditLogListPaginationQuery(\n  $count: Int = 5\n  $cursor: ID\n) {\n  ...AuditLogListFragment_1G22uz\n}\n\nfragment AuditLogFragment on AuditLog {\n  id\n  tableName\n  operation\n  rowId\n  oldData\n  newData\n  createdAt\n}\n\nfragment AuditLogListFragment_1G22uz on Query {\n  auditLogs(after: $cursor, first: $count) {\n    edges {\n      node {\n        id\n        ...AuditLogFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n"
+    "text": null
   }
 };
 })();

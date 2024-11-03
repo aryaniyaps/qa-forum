@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<192084a23e72955ab2de4f287dffcb66>>
+ * @generated SignedSource<<cb9971ce83dccec39e3964221d55a6a6>>
+ * @relayHash cf2faeaee6f4474f5937e9174225d217
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID cf2faeaee6f4474f5937e9174225d217
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -219,12 +222,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cf2faeaee6f4474f5937e9174225d217",
-    "id": null,
+    "id": "cf2faeaee6f4474f5937e9174225d217",
     "metadata": {},
     "name": "AuditLogPageQuery",
     "operationKind": "query",
-    "text": "query AuditLogPageQuery {\n  ...AuditLogListFragment\n  ...NavBarFragment\n}\n\nfragment AuditLogFragment on AuditLog {\n  id\n  tableName\n  operation\n  rowId\n  oldData\n  newData\n  createdAt\n}\n\nfragment AuditLogListFragment on Query {\n  auditLogs(first: 5) {\n    edges {\n      node {\n        id\n        ...AuditLogFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n  }\n}\n\nfragment NavBarFragment on Query {\n  viewer {\n    username\n    id\n  }\n}\n"
+    "text": null
   }
 };
 })();

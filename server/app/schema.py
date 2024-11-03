@@ -5,6 +5,7 @@ from strawberry.relay import GlobalID
 from strawberry.tools import merge_types
 
 from app.audit_logs.query import AuditLogQuery
+from app.lib.schema.extensions import PersistedQueriesExtension
 from app.questions.mutation import QuestionMutation
 from app.questions.query import QuestionQuery
 from app.scalars import ID
@@ -39,6 +40,7 @@ schema = Schema(
         ),
         ParserCache(maxsize=128),
         ValidationCache(maxsize=128),
+        PersistedQueriesExtension,
     ],
     scalar_overrides={GlobalID: ID},
 )

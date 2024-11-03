@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<dee8486c5a7623db19171354bf518fde>>
+ * @generated SignedSource<<1e056b79592c1c7df31dba2619b86432>>
+ * @relayHash 0858b241514fb222893dd499c8cabbe8
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 0858b241514fb222893dd499c8cabbe8
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -167,12 +170,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0858b241514fb222893dd499c8cabbe8",
-    "id": null,
+    "id": "0858b241514fb222893dd499c8cabbe8",
     "metadata": {},
     "name": "QuestionDetailsVoteMutation",
     "operationKind": "mutation",
-    "text": "mutation QuestionDetailsVoteMutation(\n  $voteType: VoteType!\n  $questionId: ID!\n) {\n  voteQuestion(voteType: $voteType, questionId: $questionId) {\n    question {\n      ...QuestionDetailsFragment\n      id\n    }\n  }\n}\n\nfragment QuestionDetailsFragment on Question {\n  id\n  title\n  description\n  votesCount\n  currentUserVote\n  createdAt\n}\n"
+    "text": null
   }
 };
 })();

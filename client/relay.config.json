@@ -8,5 +8,9 @@
     "**/__mocks__/**",
     "**/__tests__/**",
     "**/__generated__/**"
-  ]
+  ],
+  "persistConfig": {
+    "file": "../schema/persisted_queries.json",
+    "algorithm": "MD5"
+  }
 }

@@ -1,5 +1,6 @@
 /**
- * @generated SignedSource<<9e7985084e87f6da716d758c9904b284>>
+ * @generated SignedSource<<edb7b81895a1c32acf8c6f307817c932>>
+ * @relayHash 4a742c092c449db87fb51720ae552d49
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -7,6 +8,8 @@
 /* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
+
+// @relayRequestID 4a742c092c449db87fb51720ae552d49
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -151,12 +154,11 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4a742c092c449db87fb51720ae552d49",
-    "id": null,
+    "id": "4a742c092c449db87fb51720ae552d49",
     "metadata": {},
     "name": "QuestionDetailsDeleteVoteMutation",
     "operationKind": "mutation",
-    "text": "mutation QuestionDetailsDeleteVoteMutation(\n  $questionId: ID!\n) {\n  deleteQuestionVote(questionId: $questionId) {\n    question {\n      ...QuestionDetailsFragment\n      id\n    }\n  }\n}\n\nfragment QuestionDetailsFragment on Question {\n  id\n  title\n  description\n  votesCount\n  currentUserVote\n  createdAt\n}\n"
+    "text": null
   }
 };
 })();
