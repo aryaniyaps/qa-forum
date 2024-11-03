@@ -1,4 +1,5 @@
 from enum import StrEnum
+from pathlib import Path
 from typing import Annotated
 
 from pydantic import Field, PostgresDsn, SecretStr
@@ -80,6 +81,10 @@ class Settings(BaseSettings):
     openapi_url: str | None = None
 
     root_path: str = ""
+
+    # persisted queries config
+
+    persisted_queries_path: Path = Path("../schema/persisted_queries.json")
 
     model_config = SettingsConfigDict(
         env_file=".env",

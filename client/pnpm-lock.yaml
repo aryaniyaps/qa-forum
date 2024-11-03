@@ -111,6 +111,9 @@ importers:
       '@types/react-syntax-highlighter':
         specifier: ^15.5.13
         version: 15.5.13
+      '@types/relay-runtime':
+        specifier: ^18.1.1
+        version: 18.1.1
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.2.0
         version: 7.18.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.6.3))(eslint@8.57.1)(typescript@5.6.3)
@@ -1167,8 +1170,8 @@ packages:
   '@types/react@18.3.12':
     resolution: {integrity: sha512-D2wOSq/d6Agt28q7rSI3jhU7G6aiuzljDGZ2hTZHIkrTLUI+AF3WMeKkEZ9nN2fkBAlcktT6vcZjDFiIhMYEQw==}
 
-  '@types/relay-runtime@18.1.0':
-    resolution: {integrity: sha512-umST0eqltLKWXz7NzPUrSEH6vzIUmZeHGjWYkhsbXCJdsXN3fO7wNponkl8eToxh0D6IpSoXv2fi2weWaPNs3Q==}
+  '@types/relay-runtime@18.1.1':
+    resolution: {integrity: sha512-gnMBe2Vh8Qji0vfUhbXE9ReM7aNFUDz0a9LZ84f/UbJmtCYE2kWnT14OwLDTJud8jp9rL/2+xKyABK5V7pUIHQ==}
 
   '@types/stack-utils@2.0.3':
     resolution: {integrity: sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==}
@@ -4253,7 +4256,7 @@ snapshots:
   '@types/react-relay@16.0.6':
     dependencies:
       '@types/react': 18.3.12
-      '@types/relay-runtime': 18.1.0
+      '@types/relay-runtime': 18.1.1
 
   '@types/react-syntax-highlighter@15.5.13':
     dependencies:
@@ -4264,7 +4267,7 @@ snapshots:
       '@types/prop-types': 15.7.13
       csstype: 3.1.3
 
-  '@types/relay-runtime@18.1.0': {}
+  '@types/relay-runtime@18.1.1': {}
 
   '@types/stack-utils@2.0.3': {}
 
