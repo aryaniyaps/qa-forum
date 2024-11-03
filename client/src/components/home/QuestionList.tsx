@@ -61,27 +61,29 @@ export default function QuestionList({ rootQuery }: Props) {
   }
 
   return (
-    <ScrollArea className="w-full">
-      {data.questions.edges.map((questionEdge) => {
-        return (
-          <Question
-            question={questionEdge.node}
-            connectionId={data.questions.__id}
-            key={questionEdge.node.id}
-          />
-        );
-      })}
-      {data.questions.pageInfo.hasNextPage && (
-        <Button
-          className="w-full"
-          variant={"secondary"}
-          onClick={loadMore}
-          disabled={isPending}
-        >
-          load more
-        </Button>
-      )}
-      {isPending && <p>loading</p>}
+    <ScrollArea className="w-full h-full">
+      <div className="w-full flex flex-col gap-4 absolute pb-6">
+        {data.questions.edges.map((questionEdge) => {
+          return (
+            <Question
+              question={questionEdge.node}
+              connectionId={data.questions.__id}
+              key={questionEdge.node.id}
+            />
+          );
+        })}
+        {data.questions.pageInfo.hasNextPage && (
+          <Button
+            className="w-full"
+            variant={"secondary"}
+            onClick={loadMore}
+            disabled={isPending}
+          >
+            load more
+          </Button>
+        )}
+        {isPending && <p>loading</p>}
+      </div>
     </ScrollArea>
   );
 }

@@ -23,6 +23,34 @@ type AnswerEdge {
   node: Answer!
 }
 
+type AuditLog implements Node {
+  """The Globally Unique ID of this object"""
+  id: ID!
+  tableName: String!
+  operation: String!
+  rowId: Int!
+  oldData: JSON
+  newData: JSON
+  createdAt: DateTime!
+}
+
+type AuditLogConnection {
+  """Pagination data for this connection"""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection"""
+  edges: [AuditLogEdge!]!
+}
+
+"""An edge in a connection."""
+type AuditLogEdge {
+  """A cursor for use in pagination"""
+  cursor: String!
+
+  """The item at the end of the edge"""
+  node: AuditLog!
+}
+
 type CreateAnswerPayload {
   answerEdge: AnswerEdge!
   question: Question!
@@ -44,6 +72,11 @@ type DeleteQuestionVotePayload {
 interface Error {
   message: String!
 }
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](https://ecma-international.org/wp-content/uploads/ECMA-404_2nd_edition_december_2017.pdf).
+"""
+scalar JSON @specifiedBy(url: "https://ecma-international.org/wp-content/uploads/ECMA-404_2nd_edition_december_2017.pdf")
 
 type Mutation {
   """Create a new question."""
@@ -118,6 +151,9 @@ type Query {
 
   """Get the current user."""
   viewer: User!
+
+  """Get all audit logs available."""
+  auditLogs(before: ID = null, after: ID = null, first: Int = null, last: Int = null): AuditLogConnection!
 }
 
 type Question implements Node {

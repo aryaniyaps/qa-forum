@@ -4,6 +4,7 @@ from strawberry.extensions import ParserCache, ValidationCache
 from strawberry.relay import GlobalID
 from strawberry.tools import merge_types
 
+from app.audit_logs.query import AuditLogQuery
 from app.questions.mutation import QuestionMutation
 from app.questions.query import QuestionQuery
 from app.scalars import ID
@@ -18,6 +19,7 @@ query = merge_types(
         BaseQuery,
         QuestionQuery,
         UserQuery,
+        AuditLogQuery,
     ),
 )
 

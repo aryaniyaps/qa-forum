@@ -66,10 +66,10 @@ class AnswerConnectionType(relay.Connection[AnswerType]):
             ),
             edges=[
                 relay.Edge(
-                    node=AnswerType.from_orm(todo),
-                    cursor=relay.to_base64(AnswerType, todo.id),
+                    node=AnswerType.from_orm(answer),
+                    cursor=relay.to_base64(AnswerType, answer.id),
                 )
-                for todo in paginated_result.entities
+                for answer in paginated_result.entities
             ],
         )
 
@@ -219,9 +219,9 @@ class QuestionConnectionType(relay.Connection[QuestionType]):
             ),
             edges=[
                 relay.Edge(
-                    node=QuestionType.from_orm(todo),
-                    cursor=relay.to_base64(QuestionType, todo.id),
+                    node=QuestionType.from_orm(question),
+                    cursor=relay.to_base64(QuestionType, question.id),
                 )
-                for todo in paginated_result.entities
+                for question in paginated_result.entities
             ],
         )

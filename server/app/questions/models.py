@@ -1,5 +1,4 @@
 from datetime import datetime
-from enum import Enum
 
 from sqlalchemy import TEXT, Enum, ForeignKey, SQLColumnExpression, case, func, select
 from sqlalchemy.dialects.postgresql import CITEXT

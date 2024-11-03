@@ -1,6 +1,7 @@
 import { useFragment } from "react-relay";
 
 import { APP_NAME } from "@/lib/constants";
+import { Link } from "react-router-dom";
 import { graphql } from "relay-runtime";
 import { getAvatarUrl } from "../../lib/avatar";
 import { NavBarFragment$key } from "./__generated__/NavBarFragment.graphql";
@@ -22,7 +23,14 @@ export default function NavBar({ rootQuery }: Props) {
 
   return (
     <nav className="w-full py-6 border-b-2 border-muted flex gap-4 items-center justify-between">
-      <h2 className="text-2xl font-semibold tracking-tight">{APP_NAME}</h2>
+      <div className="flex gap-4 items-center">
+        <Link to="/" className="text-2xl font-semibold tracking-tight">
+          {APP_NAME}
+        </Link>
+        <Link to="/audit-log" className="text-muted-foreground font-semibold">
+          Audit Log
+        </Link>
+      </div>
       <div className="flex gap-4 items-center">
         <img
           src={getAvatarUrl(data.viewer.username)}

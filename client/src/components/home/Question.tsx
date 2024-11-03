@@ -33,7 +33,7 @@ export default function Question({ question }: Props) {
 
   return (
     <Link to={`/questions/${data.id}`} className="group">
-      <Card className="mb-4 group">
+      <Card>
         <CardHeader>
           <CardTitle>
             <p className="break-words">{data.title}</p>

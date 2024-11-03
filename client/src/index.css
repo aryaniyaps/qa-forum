@@ -93,6 +93,5 @@
     @apply h-full w-full;
     @apply whitespace-normal;
     @apply box-border;
-    @apply overflow-y-auto;
   }
 }
