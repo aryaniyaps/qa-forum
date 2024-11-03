@@ -1,6 +1,6 @@
 # QA Forum (Anonymous)
 
-![preview](./assets/preview.png)
+https://github.com/user-attachments/assets/c1b72eac-6a8d-40ba-a6c7-861438c0484b
 
 > QA Forum is an anonymous question-answer platform where users can post questions, provide answers, and upvote or downvote questions. The app ensures user anonymity through browser fingerprinting, which uniquely identifies users without the need for personal information.
 
