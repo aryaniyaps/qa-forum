@@ -19,6 +19,18 @@
 ## Database Schema
 
 ```sql
+-- Table for audit logs
+CREATE TABLE audit_logs (
+    id SERIAL PRIMARY KEY,
+    table_name VARCHAR NOT NULL,
+    operation VARCHAR NOT NULL,
+    row_id INTEGER NOT NULL,
+    old_data JSONB,
+    new_data JSONB,
+    created_at TIMESTAMP DEFAULT now()
+);
+
+-- Users table
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     fingerprint TEXT NOT NULL,
@@ -27,16 +39,18 @@ CREATE TABLE users (
     updated_at TIMESTAMP
 );
 
+-- Questions table
 CREATE TABLE questions (
     id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL,
-    title CITEXT(150) NOT NULL,
+    title CITEXT NOT NULL,  -- CITEXT doesn't require a length limit
     description TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT now(),
     updated_at TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
+-- Answers table
 CREATE TABLE answers (
     id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL,
@@ -48,8 +62,10 @@ CREATE TABLE answers (
     FOREIGN KEY (question_id) REFERENCES questions (id) ON DELETE CASCADE
 );
 
+-- Enum type for vote type
 CREATE TYPE vote_type AS ENUM ('UPVOTE', 'DOWNVOTE');
 
+-- Question votes table
 CREATE TABLE question_votes (
     user_id INTEGER NOT NULL,
     question_id INTEGER NOT NULL,
@@ -58,6 +74,75 @@ CREATE TABLE question_votes (
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
     FOREIGN KEY (question_id) REFERENCES questions (id) ON DELETE CASCADE
 );
+
+-- Audit log function and trigger for questions
+CREATE OR REPLACE FUNCTION log_question_changes()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF TG_OP = 'INSERT' THEN
+        INSERT INTO audit_logs (table_name, operation, row_id, new_data, created_at)
+        VALUES ('questions', 'INSERT', NEW.id, row_to_json(NEW), NOW());
+    ELSIF TG_OP = 'UPDATE' THEN
+        INSERT INTO audit_logs (table_name, operation, row_id, old_data, new_data, created_at)
+        VALUES ('questions', 'UPDATE', OLD.id, row_to_json(OLD), row_to_json(NEW), NOW());
+    ELSIF TG_OP = 'DELETE' THEN
+        INSERT INTO audit_logs (table_name, operation, row_id, old_data, created_at)
+        VALUES ('questions', 'DELETE', OLD.id, row_to_json(OLD), NOW());
+    END IF;
+    RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER question_audit_trigger
+AFTER INSERT OR UPDATE OR DELETE ON questions
+FOR EACH ROW
+EXECUTE FUNCTION log_question_changes();
+
+-- Audit log function and trigger for question_votes
+CREATE OR REPLACE FUNCTION log_question_vote_changes()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF TG_OP = 'INSERT' THEN
+        INSERT INTO audit_logs (table_name, operation, row_id, new_data, created_at)
+        VALUES ('question_votes', 'INSERT', NEW.question_id, row_to_json(NEW), NOW());
+    ELSIF TG_OP = 'UPDATE' THEN
+        INSERT INTO audit_logs (table_name, operation, row_id, old_data, new_data, created_at)
+        VALUES ('question_votes', 'UPDATE', OLD.question_id, row_to_json(OLD), row_to_json(NEW), NOW());
+    ELSIF TG_OP = 'DELETE' THEN
+        INSERT INTO audit_logs (table_name, operation, row_id, old_data, created_at)
+        VALUES ('question_votes', 'DELETE', OLD.question_id, row_to_json(OLD), NOW());
+    END IF;
+    RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER question_vote_audit_trigger
+AFTER INSERT OR UPDATE OR DELETE ON question_votes
+FOR EACH ROW
+EXECUTE FUNCTION log_question_vote_changes();
+
+-- Audit log function and trigger for answers
+CREATE OR REPLACE FUNCTION log_answer_changes()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF TG_OP = 'INSERT' THEN
+        INSERT INTO audit_logs (table_name, operation, row_id, new_data, created_at)
+        VALUES ('answers', 'INSERT', NEW.id, row_to_json(NEW), NOW());
+    ELSIF TG_OP = 'UPDATE' THEN
+        INSERT INTO audit_logs (table_name, operation, row_id, old_data, new_data, created_at)
+        VALUES ('answers', 'UPDATE', OLD.id, row_to_json(OLD), row_to_json(NEW), NOW());
+    ELSIF TG_OP = 'DELETE' THEN
+        INSERT INTO audit_logs (table_name, operation, row_id, old_data, created_at)
+        VALUES ('answers', 'DELETE', OLD.id, row_to_json(OLD), NOW());
+    END IF;
+    RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER answer_audit_trigger
+AFTER INSERT OR UPDATE OR DELETE ON answers
+FOR EACH ROW
+EXECUTE FUNCTION log_answer_changes();
 ```
 
 ## Getting Started

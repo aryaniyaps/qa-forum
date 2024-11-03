@@ -43,35 +43,31 @@ export default function AuditLog({ auditLog }: Props) {
           created at {dtf.format(new Date(data.createdAt))}
         </CardDescription>
         <CardContent className="flex flex-col px-0 pt-4 gap-4 items-stretch">
-          {!data.oldData && (
-            <div className="flex flex-col gap-2 flex-1 h-full min-h-full">
-              <p className="text-sm font-semibold">Previous Data</p>
-              <SyntaxHighlighter
-                language="json"
-                style={atomOneDark}
-                wrapLines
-                wrapLongLines
-                showLineNumbers
-                customStyle={{ height: "100%" }}
-              >
-                {JSON.stringify(data.oldData, null, 2)}
-              </SyntaxHighlighter>
-            </div>
-          )}
-          {data.newData && (
-            <div className="flex flex-col gap-2 flex-1">
-              <p className="text-sm font-semibold">Subsequent Data</p>
-              <SyntaxHighlighter
-                language="json"
-                style={atomOneDark}
-                wrapLines
-                wrapLongLines
-                showLineNumbers
-              >
-                {JSON.stringify(data.newData, null, 2)}
-              </SyntaxHighlighter>
-            </div>
-          )}
+          <div className="flex flex-col gap-2 flex-1 h-full min-h-full">
+            <p className="text-sm font-semibold">Previous Data</p>
+            <SyntaxHighlighter
+              language="json"
+              style={atomOneDark}
+              wrapLines
+              wrapLongLines
+              showLineNumbers
+              customStyle={{ height: "100%" }}
+            >
+              {JSON.stringify(data.oldData, null, 2)}
+            </SyntaxHighlighter>
+          </div>
+          <div className="flex flex-col gap-2 flex-1">
+            <p className="text-sm font-semibold">Subsequent Data</p>
+            <SyntaxHighlighter
+              language="json"
+              style={atomOneDark}
+              wrapLines
+              wrapLongLines
+              showLineNumbers
+            >
+              {JSON.stringify(data.newData, null, 2)}
+            </SyntaxHighlighter>
+          </div>
         </CardContent>
       </CardHeader>
     </Card>
