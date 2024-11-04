@@ -33,7 +33,11 @@
                 "**/__mocks__/**",
                 "**/__tests__/**",
                 "**/__generated__/**"
-              ]
+              ],
+              "persistConfig": {
+                "url": "http://localhost:2999",
+                "params": {}
+              }
             }
           ]
         ]

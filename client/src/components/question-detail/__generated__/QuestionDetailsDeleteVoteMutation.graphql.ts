@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<edb7b81895a1c32acf8c6f307817c932>>
+ * @generated SignedSource<<14841fa4195124e3dd5aec5e4fd147ee>>
  * @relayHash 4a742c092c449db87fb51720ae552d49
  * @lightSyntaxTransform
  * @nogrep
@@ -11,7 +11,7 @@
 
 // @relayRequestID 4a742c092c449db87fb51720ae552d49
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type QuestionDetailsDeleteVoteMutation$variables = {
   questionId: string;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c0b8fd60a733a9dbe0bc9f15b8d5b6cc>>
+ * @generated SignedSource<<62f0a906aee529b3a11a54452d9ce66b>>
  * @relayHash 21b9a64249ce66c5b8eae2f630319595
  * @lightSyntaxTransform
  * @nogrep
@@ -11,7 +11,7 @@
 
 // @relayRequestID 21b9a64249ce66c5b8eae2f630319595
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type QuestionListPaginationQuery$variables = {
   count?: number | null | undefined;

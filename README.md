@@ -188,6 +188,10 @@ EXECUTE FUNCTION log_answer_changes();
      ```bash
      pdm run generate-graphql-schema
      ```
+   - Running the persisted queries server:
+     ```bash
+     pdm run persist-server
+     ```
    - Start the backend server:
      ```bash
      pdm run dev

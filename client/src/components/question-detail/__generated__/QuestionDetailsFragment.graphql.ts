@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<66cadc3b10249315e419a1dc7b5a7164>>
+ * @generated SignedSource<<d624b618377508f0d63dc574725d91ca>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 export type VoteType = "DOWNVOTE" | "UPVOTE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type QuestionDetailsFragment$data = {

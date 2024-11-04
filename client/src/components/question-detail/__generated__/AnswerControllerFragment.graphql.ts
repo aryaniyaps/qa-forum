@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3ec932e01dc5a064f4a0779be774b3dc>>
+ * @generated SignedSource<<f503576e120c2014838a9b24a6648a0a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AnswerControllerFragment$data = {
   readonly answers: {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<773742b60a535dd84256f9ed4f4418fb>>
+ * @generated SignedSource<<5b69d04a25ca10457d50afb371613cf6>>
  * @relayHash b01d8c53417996ee1e7864e02ec4dfdc
  * @lightSyntaxTransform
  * @nogrep
@@ -11,7 +11,7 @@
 
 // @relayRequestID b01d8c53417996ee1e7864e02ec4dfdc
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuditLogListPaginationQuery$variables = {
   count?: number | null | undefined;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<992c6c1d7e73833a9f0d5dc256db7a4b>>
+ * @generated SignedSource<<98be36ed3f027ead5346e8a56d4dd17e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuditLogFragment$data = {
   readonly createdAt: any;

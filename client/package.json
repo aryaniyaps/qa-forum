@@ -12,6 +12,22 @@
     "relay": "relay-compiler --watch",
     "test": "NODE_ENV=test jest"
   },
+  "relay": {
+    "src": "./src",
+    "language": "typescript",
+    "schema": "../schema/schema.graphql",
+    "eagerEsModules": true,
+    "excludes": [
+      "**/node_modules/**",
+      "**/__mocks__/**",
+      "**/__tests__/**",
+      "**/__generated__/**"
+    ],
+    "persistConfig": {
+      "url": "http://localhost:2999",
+      "params": {}
+    }
+  },
   "dependencies": {
     "@hookform/resolvers": "^3.6.0",
     "@radix-ui/react-label": "^2.1.0",
@@ -27,10 +43,10 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.52.0",
-    "react-relay": "^17.0.0",
+    "react-relay": "^18.1.0",
     "react-router-dom": "^6.23.1",
     "react-syntax-highlighter": "^15.6.1",
-    "relay-runtime": "^17.0.0",
+    "relay-runtime": "^18.1.0",
     "serve": "^14.2.4",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
@@ -39,7 +55,7 @@
   "devDependencies": {
     "@swc/core": "^1.6.6",
     "@swc/jest": "^0.2.36",
-    "@swc/plugin-relay": "^2.0.9",
+    "@swc/plugin-relay": "^4.0.0",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.5.2",
@@ -53,7 +69,7 @@
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "autoprefixer": "^10.4.19",
-    "babel-plugin-relay": "^17.0.0",
+    "babel-plugin-relay": "^18.1.0",
     "camelcase": "^6.3.0",
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
@@ -62,8 +78,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "jest-watch-typeahead": "^2.2.2",
     "postcss": "^8.4.38",
-    "relay-compiler": "^17.0.0",
-    "relay-test-utils": "^17.0.0",
+    "relay-compiler": "^18.1.0",
     "tailwindcss": "^3.4.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.2.2",

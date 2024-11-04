@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6396b9db8c2d9226d18794e538307555>>
+ * @generated SignedSource<<7aafb1381fa0cf0ee9e4b9c2bd0aedfd>>
  * @relayHash 6399839e5279d4a76f82e79d36962831
  * @lightSyntaxTransform
  * @nogrep
@@ -11,7 +11,7 @@
 
 // @relayRequestID 6399839e5279d4a76f82e79d36962831
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type QuestionControllerCreateMutation$variables = {
   connections: ReadonlyArray<string>;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<deb99985d81bcdc73b3b1f5e54700e7b>>
+ * @generated SignedSource<<7f220f2c52d45db36f7fbfd035d6f96b>>
  * @relayHash 95ea275d600f614ccdd18182e730dd2e
  * @lightSyntaxTransform
  * @nogrep
@@ -11,7 +11,7 @@
 
 // @relayRequestID 95ea275d600f614ccdd18182e730dd2e
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type QuestionDetailPageQuery$variables = {
   questionId: string;

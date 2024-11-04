@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cb9971ce83dccec39e3964221d55a6a6>>
+ * @generated SignedSource<<8caa888c8d3a43a7b284803f96efb498>>
  * @relayHash cf2faeaee6f4474f5937e9174225d217
  * @lightSyntaxTransform
  * @nogrep
@@ -11,7 +11,7 @@
 
 // @relayRequestID cf2faeaee6f4474f5937e9174225d217
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuditLogPageQuery$variables = Record<PropertyKey, never>;
 export type AuditLogPageQuery$data = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<088b129da621295fbd7437a57eff1a14>>
+ * @generated SignedSource<<1adb040200c539bb07db6effeabec5a8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AnswerCountFragment$data = {
   readonly answersCount: number;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<caca8086e83373b0ecb0e78021185ff6>>
+ * @generated SignedSource<<c6bb3e1ceeb947048fe14a55201555b0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NavBarFragment$data = {
   readonly viewer: {

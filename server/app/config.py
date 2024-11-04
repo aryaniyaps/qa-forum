@@ -84,7 +84,7 @@ class Settings(BaseSettings):
 
     # persisted queries config
 
-    persisted_queries_path: Path = Path("../schema/persisted_queries.json")
+    persisted_queries_path: Path = Path("query_map.json")
 
     model_config = SettingsConfigDict(
         env_file=".env",

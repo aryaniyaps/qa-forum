@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1e056b79592c1c7df31dba2619b86432>>
+ * @generated SignedSource<<87101a7c7010b329925827248453f4b6>>
  * @relayHash 0858b241514fb222893dd499c8cabbe8
  * @lightSyntaxTransform
  * @nogrep
@@ -11,7 +11,7 @@
 
 // @relayRequestID 0858b241514fb222893dd499c8cabbe8
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type VoteType = "DOWNVOTE" | "UPVOTE" | "%future added value";
 export type QuestionDetailsVoteMutation$variables = {

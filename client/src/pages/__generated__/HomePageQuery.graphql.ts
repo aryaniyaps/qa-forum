@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<de8fd2dbe96ceb5611e669108e45e25e>>
+ * @generated SignedSource<<ee9b2d6eb4d467ab7be7f653a019c46c>>
  * @relayHash 1c76c7e0af258857a3e8e5059c32f657
  * @lightSyntaxTransform
  * @nogrep
@@ -11,7 +11,7 @@
 
 // @relayRequestID 1c76c7e0af258857a3e8e5059c32f657
 
-import { ConcreteRequest, Query } from 'relay-runtime';
+import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type HomePageQuery$variables = Record<PropertyKey, never>;
 export type HomePageQuery$data = {

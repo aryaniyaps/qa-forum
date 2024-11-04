@@ -46,6 +46,7 @@ test = [
 
 [tool.pdm.scripts]
 dev = "app/server.py"
+persist-server = "scripts/run_persist_server.py"
 lint = { composite = ["black .", "ruff check --fix .", "black .", "mypy ."] }
 generate-openapi-schema = "scripts/generate_openapi_schema.py"
 generate-graphql-schema = "strawberry export-schema app.schema:schema --output ../schema/schema.graphql"
