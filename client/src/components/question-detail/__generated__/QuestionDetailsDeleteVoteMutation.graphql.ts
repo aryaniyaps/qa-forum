@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<15a3e7f2f28c917c4c09d390eeb7af31>>
+ * @generated SignedSource<<73060e7f8c94a2ed4cbd66662b04b206>>
  * @relayHash 4d99575c106e330fd447be13d263ccc4
  * @lightSyntaxTransform
  * @nogrep
@@ -18,7 +18,12 @@ export type QuestionDetailsDeleteVoteMutation$variables = {
 };
 export type QuestionDetailsDeleteVoteMutation$data = {
   readonly deleteQuestionVote: {
+    readonly __typename: "Question";
     readonly " $fragmentSpreads": FragmentRefs<"QuestionDetailsFragment">;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
   };
 };
 export type QuestionDetailsDeleteVoteMutation = {
@@ -45,6 +50,13 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 };
@@ -63,6 +75,7 @@ return {
         "name": "deleteQuestionVote",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "kind": "InlineFragment",
             "selections": [
@@ -96,17 +109,11 @@ return {
         "name": "deleteQuestionVote",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "__typename",
-            "storageKey": null
-          },
+          (v2/*: any*/),
           {
             "kind": "InlineFragment",
             "selections": [
-              (v2/*: any*/),
+              (v3/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -149,7 +156,7 @@ return {
           {
             "kind": "InlineFragment",
             "selections": [
-              (v2/*: any*/)
+              (v3/*: any*/)
             ],
             "type": "Node",
             "abstractKey": "__isNode"
@@ -169,6 +176,6 @@ return {
 };
 })();
 
-(node as any).hash = "0846c2d115191aa1bb9c94c5239e68d7";
+(node as any).hash = "8310e8d59d8bf6ef5563140017e1cc80";
 
 export default node;
