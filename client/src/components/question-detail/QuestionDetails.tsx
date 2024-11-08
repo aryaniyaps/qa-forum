@@ -25,10 +25,8 @@ const QuestionDetailsFragment = graphql`
 const QuestionDetailsVoteMutation = graphql`
   mutation QuestionDetailsVoteMutation($voteType: VoteType!, $questionId: ID!) {
     voteQuestion(voteType: $voteType, questionId: $questionId) {
-      ... on VoteQuestionPayload {
-        question {
-          ...QuestionDetailsFragment
-        }
+      ... on Question {
+        ...QuestionDetailsFragment
       }
     }
   }
@@ -37,10 +35,8 @@ const QuestionDetailsVoteMutation = graphql`
 const QuestionDetailsDeleteVoteMutation = graphql`
   mutation QuestionDetailsDeleteVoteMutation($questionId: ID!) {
     deleteQuestionVote(questionId: $questionId) {
-      ... on DeleteQuestionVotePayload {
-        question {
-          ...QuestionDetailsFragment
-        }
+      ... on Question {
+        ...QuestionDetailsFragment
       }
     }
   }

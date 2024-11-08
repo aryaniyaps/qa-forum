@@ -188,14 +188,15 @@ class CreateAnswerPayload:
     question: QuestionType
 
 
-@strawberry.type
-class VoteQuestionPayload:
-    question: QuestionType
+VoteQuestionPayload = Annotated[
+    QuestionType | QuestionNotFoundErrorType,
+    strawberry.union(name="VoteQuestionPayload"),
+]
 
-
-@strawberry.type
-class DeleteQuestionVotePayload:
-    question: QuestionType
+DeleteQuestionVotePayload = Annotated[
+    QuestionType | QuestionNotFoundErrorType,
+    strawberry.union(name="DeleteQuestionVotePayload"),
+]
 
 
 @strawberry.type(name="QuestionConnection")

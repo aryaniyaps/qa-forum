@@ -1,6 +1,6 @@
 /**
- * @generated SignedSource<<87101a7c7010b329925827248453f4b6>>
- * @relayHash 0858b241514fb222893dd499c8cabbe8
+ * @generated SignedSource<<c05552dd3aa8395835ef7c1b7752d925>>
+ * @relayHash b7af1346f80c30e5b5441b0ac0d94469
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-// @relayRequestID 0858b241514fb222893dd499c8cabbe8
+// @relayRequestID b7af1346f80c30e5b5441b0ac0d94469
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -20,9 +20,7 @@ export type QuestionDetailsVoteMutation$variables = {
 };
 export type QuestionDetailsVoteMutation$data = {
   readonly voteQuestion: {
-    readonly question: {
-      readonly " $fragmentSpreads": FragmentRefs<"QuestionDetailsFragment">;
-    };
+    readonly " $fragmentSpreads": FragmentRefs<"QuestionDetailsFragment">;
   };
 };
 export type QuestionDetailsVoteMutation = {
@@ -52,7 +50,14 @@ v2 = [
     "name": "voteType",
     "variableName": "voteType"
   }
-];
+],
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [
@@ -66,18 +71,13 @@ return {
       {
         "alias": null,
         "args": (v2/*: any*/),
-        "concreteType": "VoteQuestionPayload",
+        "concreteType": null,
         "kind": "LinkedField",
         "name": "voteQuestion",
         "plural": false,
         "selections": [
           {
-            "alias": null,
-            "args": null,
-            "concreteType": "Question",
-            "kind": "LinkedField",
-            "name": "question",
-            "plural": false,
+            "kind": "InlineFragment",
             "selections": [
               {
                 "args": null,
@@ -85,7 +85,8 @@ return {
                 "name": "QuestionDetailsFragment"
               }
             ],
-            "storageKey": null
+            "type": "Question",
+            "abstractKey": null
           }
         ],
         "storageKey": null
@@ -106,7 +107,7 @@ return {
       {
         "alias": null,
         "args": (v2/*: any*/),
-        "concreteType": "VoteQuestionPayload",
+        "concreteType": null,
         "kind": "LinkedField",
         "name": "voteQuestion",
         "plural": false,
@@ -114,18 +115,14 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "Question",
-            "kind": "LinkedField",
-            "name": "question",
-            "plural": false,
+            "kind": "ScalarField",
+            "name": "__typename",
+            "storageKey": null
+          },
+          {
+            "kind": "InlineFragment",
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "id",
-                "storageKey": null
-              },
+              (v3/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -162,7 +159,16 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": null
+            "type": "Question",
+            "abstractKey": null
+          },
+          {
+            "kind": "InlineFragment",
+            "selections": [
+              (v3/*: any*/)
+            ],
+            "type": "Node",
+            "abstractKey": "__isNode"
           }
         ],
         "storageKey": null
@@ -170,7 +176,7 @@ return {
     ]
   },
   "params": {
-    "id": "0858b241514fb222893dd499c8cabbe8",
+    "id": "b7af1346f80c30e5b5441b0ac0d94469",
     "metadata": {},
     "name": "QuestionDetailsVoteMutation",
     "operationKind": "mutation",
@@ -179,6 +185,6 @@ return {
 };
 })();
 
-(node as any).hash = "27c61d1abe420bf00a46ea971b2cb202";
+(node as any).hash = "df90045a9a0d9b937ad9aebf5d9a5bc4";
 
 export default node;

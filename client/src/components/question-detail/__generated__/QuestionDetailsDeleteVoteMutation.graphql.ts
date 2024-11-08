@@ -1,6 +1,6 @@
 /**
- * @generated SignedSource<<14841fa4195124e3dd5aec5e4fd147ee>>
- * @relayHash 4a742c092c449db87fb51720ae552d49
+ * @generated SignedSource<<15a3e7f2f28c917c4c09d390eeb7af31>>
+ * @relayHash 4d99575c106e330fd447be13d263ccc4
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-// @relayRequestID 4a742c092c449db87fb51720ae552d49
+// @relayRequestID 4d99575c106e330fd447be13d263ccc4
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -18,9 +18,7 @@ export type QuestionDetailsDeleteVoteMutation$variables = {
 };
 export type QuestionDetailsDeleteVoteMutation$data = {
   readonly deleteQuestionVote: {
-    readonly question: {
-      readonly " $fragmentSpreads": FragmentRefs<"QuestionDetailsFragment">;
-    };
+    readonly " $fragmentSpreads": FragmentRefs<"QuestionDetailsFragment">;
   };
 };
 export type QuestionDetailsDeleteVoteMutation = {
@@ -42,7 +40,14 @@ v1 = [
     "name": "questionId",
     "variableName": "questionId"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -53,18 +58,13 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "DeleteQuestionVotePayload",
+        "concreteType": null,
         "kind": "LinkedField",
         "name": "deleteQuestionVote",
         "plural": false,
         "selections": [
           {
-            "alias": null,
-            "args": null,
-            "concreteType": "Question",
-            "kind": "LinkedField",
-            "name": "question",
-            "plural": false,
+            "kind": "InlineFragment",
             "selections": [
               {
                 "args": null,
@@ -72,7 +72,8 @@ return {
                 "name": "QuestionDetailsFragment"
               }
             ],
-            "storageKey": null
+            "type": "Question",
+            "abstractKey": null
           }
         ],
         "storageKey": null
@@ -90,7 +91,7 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "DeleteQuestionVotePayload",
+        "concreteType": null,
         "kind": "LinkedField",
         "name": "deleteQuestionVote",
         "plural": false,
@@ -98,18 +99,14 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "Question",
-            "kind": "LinkedField",
-            "name": "question",
-            "plural": false,
+            "kind": "ScalarField",
+            "name": "__typename",
+            "storageKey": null
+          },
+          {
+            "kind": "InlineFragment",
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "id",
-                "storageKey": null
-              },
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -146,7 +143,16 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": null
+            "type": "Question",
+            "abstractKey": null
+          },
+          {
+            "kind": "InlineFragment",
+            "selections": [
+              (v2/*: any*/)
+            ],
+            "type": "Node",
+            "abstractKey": "__isNode"
           }
         ],
         "storageKey": null
@@ -154,7 +160,7 @@ return {
     ]
   },
   "params": {
-    "id": "4a742c092c449db87fb51720ae552d49",
+    "id": "4d99575c106e330fd447be13d263ccc4",
     "metadata": {},
     "name": "QuestionDetailsDeleteVoteMutation",
     "operationKind": "mutation",
@@ -163,6 +169,6 @@ return {
 };
 })();
 
-(node as any).hash = "cba2696a38e174a0e13c70e89fb2dc38";
+(node as any).hash = "0846c2d115191aa1bb9c94c5239e68d7";
 
 export default node;

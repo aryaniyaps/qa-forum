@@ -65,9 +65,7 @@ scalar DateTime
 
 union DeleteQuestionPayload = Question | QuestionNotFoundError
 
-type DeleteQuestionVotePayload {
-  question: Question!
-}
+union DeleteQuestionVotePayload = Question | QuestionNotFoundError
 
 interface Error {
   message: String!
@@ -199,9 +197,7 @@ type User implements Node {
   updatedAt: DateTime
 }
 
-type VoteQuestionPayload {
-  question: Question!
-}
+union VoteQuestionPayload = Question | QuestionNotFoundError
 
 enum VoteType {
   UPVOTE

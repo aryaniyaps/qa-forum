@@ -113,7 +113,7 @@ class QuestionMutation:
             ),
         ],
         question_service: Annotated[QuestionService, Inject],
-    ) -> VoteQuestionPayload | QuestionNotFoundErrorType:
+    ) -> VoteQuestionPayload:
         """Vote for a question."""
         result = await question_service.vote_question(
             user_id=info.context["user"].id,
@@ -126,7 +126,10 @@ class QuestionMutation:
                 case QuestionNotFoundError():
                     return QuestionNotFoundErrorType()
 
-        return VoteQuestionPayload(question=await question_id.resolve_node(info))
+        return await question_id.resolve_node(
+            info,
+            ensure_type=QuestionType,
+        )
 
     @strawberry.mutation(  # type: ignore[misc]
         graphql_type=DeleteQuestionVotePayload,
@@ -143,7 +146,7 @@ class QuestionMutation:
             ),
         ],
         question_service: Annotated[QuestionService, Inject],
-    ) -> DeleteQuestionVotePayload | QuestionNotFoundErrorType:
+    ) -> DeleteQuestionVotePayload:
         """Delete a question vote."""
         result = await question_service.delete_vote(
             user_id=info.context["user"].id, question_id=int(question_id.node_id)
@@ -154,7 +157,10 @@ class QuestionMutation:
                 case QuestionNotFoundError():
                     return QuestionNotFoundErrorType()
 
-        return DeleteQuestionVotePayload(question=await question_id.resolve_node(info))
+        return await question_id.resolve_node(
+            info,
+            ensure_type=QuestionType,
+        )
 
     @strawberry.mutation(  # type: ignore[misc]
         graphql_type=CreateAnswerPayload,
