@@ -15,9 +15,8 @@ class PersistedQueriesExtension(SchemaExtension):
         with Path.open(persisted_queries_path, "r") as f:
             self.cache = json.load(f)
 
-    async def on_execute(self):
-        execution_context = self.execution_context
-        body = await execution_context.context.get("request").json()
+    async def on_operation(self) -> AsyncIterator[None] | Iterator[None]:
+        body = await self.execution_context.context.get("request").json()
         document_id = body.get("document_id")
         persisted_query = self.cache.get(document_id)
         if persisted_query is None:
@@ -27,11 +26,6 @@ class PersistedQueriesExtension(SchemaExtension):
                     GraphQLError("Invalid query provided."),
                 ],
             )
-
-    async def on_operation(self) -> AsyncIterator[None] | Iterator[None]:
-        execution_context = self.execution_context
-        body = await execution_context.context.get("request").json()
-        document_id = body.get("document_id")
-        persisted_query = self.cache.get(document_id)
-        execution_context.query = persisted_query
+        else:
+            self.execution_context.query = persisted_query
         yield
