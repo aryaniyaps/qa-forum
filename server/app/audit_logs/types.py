@@ -58,15 +58,19 @@ class AuditLogConnectionType(relay.Connection[AuditLogType]):
         return cls(
             page_info=relay.PageInfo(
                 has_next_page=paginated_result.page_info.has_next_page,
+                has_previous_page=paginated_result.page_info.has_previous_page,
                 start_cursor=relay.to_base64(
                     AuditLogType,
                     paginated_result.page_info.start_cursor,
-                ),
-                has_previous_page=paginated_result.page_info.has_previous_page,
+                )
+                if paginated_result.page_info.start_cursor
+                else None,
                 end_cursor=relay.to_base64(
                     AuditLogType,
                     paginated_result.page_info.end_cursor,
-                ),
+                )
+                if paginated_result.page_info.end_cursor
+                else None,
             ),
             edges=[
                 relay.Edge(

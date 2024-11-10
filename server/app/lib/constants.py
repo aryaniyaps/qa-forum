@@ -12,9 +12,9 @@ APP_URL = "https://example.com"  # frontend app URL
 
 MAX_PAGINATION_LIMIT = 100
 
-# authentication
+# description previews
 
-VERIFICATION_TOKEN_EXPIRES_IN = 60 * 10  # 10 minutes
+DESCRIPTION_PREVIEW_MAX_LENGTH = 65
 
 
 class VoteType(Enum):

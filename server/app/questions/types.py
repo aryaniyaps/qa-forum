@@ -10,7 +10,7 @@ from strawberry import relay
 from app.base.types import BaseErrorType, BaseNodeType
 from app.context import Info
 from app.database.paginator import PaginatedResult
-from app.lib.constants import VoteType
+from app.lib.constants import DESCRIPTION_PREVIEW_MAX_LENGTH, VoteType
 from app.questions.models import Answer, Question
 from app.questions.repositories import AnswerRepo, QuestionVoteRepo
 
@@ -54,15 +54,19 @@ class AnswerConnectionType(relay.Connection[AnswerType]):
         return cls(
             page_info=relay.PageInfo(
                 has_next_page=paginated_result.page_info.has_next_page,
+                has_previous_page=paginated_result.page_info.has_previous_page,
                 start_cursor=relay.to_base64(
                     AnswerType,
                     paginated_result.page_info.start_cursor,
-                ),
-                has_previous_page=paginated_result.page_info.has_previous_page,
+                )
+                if paginated_result.page_info.start_cursor
+                else None,
                 end_cursor=relay.to_base64(
                     AnswerType,
                     paginated_result.page_info.end_cursor,
-                ),
+                )
+                if paginated_result.page_info.end_cursor
+                else None,
             ),
             edges=[
                 relay.Edge(
@@ -86,9 +90,9 @@ class QuestionType(BaseNodeType[Question]):
     @strawberry.field
     def description_preview(self) -> str:
         """Return a preview of the description."""
-        if len(self.description) <= 65:
+        if len(self.description) <= DESCRIPTION_PREVIEW_MAX_LENGTH:
             return self.description
-        return self.description[:65] + "..."
+        return self.description[:DESCRIPTION_PREVIEW_MAX_LENGTH] + "..."
 
     @strawberry.field(
         graphql_type=VoteType | None,
@@ -102,7 +106,6 @@ class QuestionType(BaseNodeType[Question]):
             Inject,
         ],
     ) -> VoteType | None:
-        """The vote of the current user for this question."""
         existing_vote = await question_vote_repo.get(
             question_id=self.id,
             user_id=info.context["user"].id,
@@ -115,7 +118,6 @@ class QuestionType(BaseNodeType[Question]):
     @inject
     async def answers(
         self,
-        info: Info,
         answer_repo: Annotated[
             AnswerRepo,
             Inject,
@@ -208,15 +210,19 @@ class QuestionConnectionType(relay.Connection[QuestionType]):
         return cls(
             page_info=relay.PageInfo(
                 has_next_page=paginated_result.page_info.has_next_page,
+                has_previous_page=paginated_result.page_info.has_previous_page,
                 start_cursor=relay.to_base64(
                     QuestionType,
                     paginated_result.page_info.start_cursor,
-                ),
-                has_previous_page=paginated_result.page_info.has_previous_page,
+                )
+                if paginated_result.page_info.start_cursor
+                else None,
                 end_cursor=relay.to_base64(
                     QuestionType,
                     paginated_result.page_info.end_cursor,
-                ),
+                )
+                if paginated_result.page_info.end_cursor
+                else None,
             ),
             edges=[
                 relay.Edge(
