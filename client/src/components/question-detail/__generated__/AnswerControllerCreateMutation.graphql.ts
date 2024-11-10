@@ -1,6 +1,6 @@
 /**
- * @generated SignedSource<<8b01c25212d2138d6b7131321834bebf>>
- * @relayHash f6a890ad3252574f075a4038f9794157
+ * @generated SignedSource<<cb508f8f27f8988d2645566bed4c25b6>>
+ * @relayHash 4cb4d4b33e5e0fa9dbaf5ca7fee565cf
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-// @relayRequestID f6a890ad3252574f075a4038f9794157
+// @relayRequestID 4cb4d4b33e5e0fa9dbaf5ca7fee565cf
 
 import { ConcreteRequest } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
@@ -26,7 +26,8 @@ export type AnswerControllerCreateMutation$data = {
       };
     };
     readonly question: {
-      readonly " $fragmentSpreads": FragmentRefs<"QuestionFragment">;
+      readonly id: string;
+      readonly " $fragmentSpreads": FragmentRefs<"AnswerCountFragment">;
     };
   };
 };
@@ -69,20 +70,6 @@ v4 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "createdAt",
-  "storageKey": null
-},
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "updatedAt",
-  "storageKey": null
 };
 return {
   "fragment": {
@@ -111,10 +98,11 @@ return {
             "name": "question",
             "plural": false,
             "selections": [
+              (v4/*: any*/),
               {
                 "args": null,
                 "kind": "FragmentSpread",
-                "name": "QuestionFragment"
+                "name": "AnswerCountFragment"
               }
             ],
             "storageKey": null
@@ -184,32 +172,9 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "title",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "descriptionPreview",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
                 "name": "answersCount",
                 "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "votesCount",
-                "storageKey": null
-              },
-              (v5/*: any*/),
-              (v6/*: any*/)
+              }
             ],
             "storageKey": null
           },
@@ -237,8 +202,20 @@ return {
                     "name": "content",
                     "storageKey": null
                   },
-                  (v5/*: any*/),
-                  (v6/*: any*/)
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "createdAt",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "updatedAt",
+                    "storageKey": null
+                  }
                 ],
                 "storageKey": null
               }
@@ -267,7 +244,7 @@ return {
     ]
   },
   "params": {
-    "id": "f6a890ad3252574f075a4038f9794157",
+    "id": "4cb4d4b33e5e0fa9dbaf5ca7fee565cf",
     "metadata": {},
     "name": "AnswerControllerCreateMutation",
     "operationKind": "mutation",
@@ -276,6 +253,6 @@ return {
 };
 })();
 
-(node as any).hash = "5860ef226ef66813f75db6496951b13b";
+(node as any).hash = "491703720b5bad3d0f20d05a7259937e";
 
 export default node;

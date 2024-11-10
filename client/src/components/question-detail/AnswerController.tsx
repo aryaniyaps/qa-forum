@@ -40,7 +40,8 @@ const AnswerControllerCreateMutation = graphql`
   ) {
     createAnswer(content: $content, questionId: $questionId) {
       question {
-        ...QuestionFragment
+        id
+        ...AnswerCountFragment
       }
       answerEdge @prependEdge(connections: $connections) {
         node {
