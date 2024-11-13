@@ -33,3 +33,5 @@ class PersistedQueriesExtension(SchemaExtension):
 
 
 # TODO: use query complexity extension from https://github.com/Checho3388/graphql-complexity
+# READ https://shopify.dev/docs/api/usage/rate-limits#graphql-admin-api-rate-limits
+# READ https://shopify.dev/docs/api/admin-graphql#rate_limits
