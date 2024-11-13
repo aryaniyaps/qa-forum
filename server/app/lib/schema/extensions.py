@@ -5,7 +5,8 @@ from collections.abc import AsyncIterator, Iterator
 from pathlib import Path
 
 from graphql import ExecutionResult, GraphQLError
-from strawberry.extensions import SchemaExtension
+from strawberry.extensions import FieldExtension, SchemaExtension
+from strawberry.types.field import StrawberryField
 
 
 class PersistedQueriesExtension(SchemaExtension):
@@ -29,3 +30,6 @@ class PersistedQueriesExtension(SchemaExtension):
         else:
             self.execution_context.query = persisted_query
         yield
+
+
+# TODO: use query complexity extension from https://github.com/Checho3388/graphql-complexity
