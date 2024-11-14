@@ -60,7 +60,7 @@ class QueryCostRateLimitExtension(SchemaExtension):
         # Iterate through operation definitions in the GraphQL document
         for definition in graphql_document.definitions:
             if isinstance(definition, OperationDefinitionNode):
-                operation_type = definition.operation.name.value
+                operation_type = definition.operation.name
 
                 # Process each field in the operation's selection set
                 for selection in definition.selection_set.selections:
@@ -89,6 +89,8 @@ class QueryCostRateLimitExtension(SchemaExtension):
         yield
 
 
+# TODO: assign 10 cost to mutations
+# TODO: assign 1 cost to each node, for connections, use the first or last params to calulate the cost
 # TODO: use query complexity extension from https://github.com/Checho3388/graphql-complexity
 # READ https://shopify.dev/docs/api/usage/rate-limits#graphql-admin-api-rate-limits
 # READ https://shopify.dev/docs/api/admin-graphql#rate_limits
