@@ -3,10 +3,10 @@ from collections.abc import AsyncIterator, Iterator
 
 # Add import for loading persisted queries
 from pathlib import Path
+from typing import Any
 
-from graphql import ExecutionResult, GraphQLError
-from strawberry.extensions import FieldExtension, SchemaExtension
-from strawberry.types.field import StrawberryField
+from graphql import ExecutionResult, FieldNode, GraphQLError, OperationDefinitionNode
+from strawberry.extensions import SchemaExtension
 
 
 class PersistedQueriesExtension(SchemaExtension):
@@ -29,6 +29,63 @@ class PersistedQueriesExtension(SchemaExtension):
             )
         else:
             self.execution_context.query = persisted_query
+        yield
+
+
+class QueryCostRateLimitExtension(SchemaExtension):
+    def get_results(self) -> dict[str, Any]:
+        # Example result structure with placeholders
+        return {
+            "cost": {
+                "requestedQueryCost": self.execution_context.context.get(
+                    "query_cost", 0
+                ),
+                "throttleStatus": {
+                    "maximumAvailable": 1000,
+                    "currentlyAvailable": max(
+                        0, 1000 - self.execution_context.context.get("query_cost", 0)
+                    ),
+                    "restoreRate": 50,
+                },
+            }
+        }
+
+    def on_execute(self) -> AsyncIterator[None] | Iterator[None]:
+        total_cost = 0
+        graphql_document = self.execution_context.graphql_document
+
+        if graphql_document is None:
+            return
+
+        # Iterate through operation definitions in the GraphQL document
+        for definition in graphql_document.definitions:
+            if isinstance(definition, OperationDefinitionNode):
+                operation_type = definition.operation.name.value
+
+                # Process each field in the operation's selection set
+                for selection in definition.selection_set.selections:
+                    if isinstance(selection, FieldNode):
+                        field_name = selection.name.value
+
+                        # Get the field based on the type and field name
+                        parent_type = self.execution_context.schema.get_type_by_name(
+                            operation_type
+                        )
+
+                        if parent_type:
+                            field = self.execution_context.schema.get_field_for_type(
+                                field_name, parent_type.name
+                            )
+
+                            if field and hasattr(field, "metadata"):
+                                # Get the complexity cost from field metadata or set default to 0
+                                complexity_cost = field.metadata.get(
+                                    "complexity_cost", 0
+                                )
+                                total_cost += complexity_cost
+
+        # Store total cost in context to access later in `get_results`
+        self.execution_context.context["query_cost"] = total_cost
         yield
 
 
