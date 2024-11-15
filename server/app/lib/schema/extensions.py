@@ -5,7 +5,13 @@ from collections.abc import AsyncIterator, Iterator
 from pathlib import Path
 from typing import Any
 
-from graphql import ExecutionResult, FieldNode, GraphQLError, OperationDefinitionNode
+from graphql import (
+    ExecutionResult,
+    FieldNode,
+    FragmentDefinitionNode,
+    GraphQLError,
+    OperationDefinitionNode,
+)
 from strawberry.extensions import SchemaExtension
 
 
@@ -29,7 +35,7 @@ class PersistedQueriesExtension(SchemaExtension):
             )
         else:
             self.execution_context.query = persisted_query
-        yield
+        yield None
 
 
 class QueryCostRateLimitExtension(SchemaExtension):
@@ -51,42 +57,53 @@ class QueryCostRateLimitExtension(SchemaExtension):
         }
 
     def on_execute(self) -> AsyncIterator[None] | Iterator[None]:
-        total_cost = 0
         graphql_document = self.execution_context.graphql_document
 
         if graphql_document is None:
-            return
+            return None
 
-        # Iterate through operation definitions in the GraphQL document
+        # Iterate through operation and fragment definitions in the GraphQL document
         for definition in graphql_document.definitions:
             if isinstance(definition, OperationDefinitionNode):
+                # Get root type (e.g., "Query", "Mutation", or "Subscription") for the operation
                 operation_type = definition.operation.name
+                parent_type = self.execution_context.schema.get_type_by_name(
+                    operation_type
+                )
 
                 # Process each field in the operation's selection set
                 for selection in definition.selection_set.selections:
                     if isinstance(selection, FieldNode):
                         field_name = selection.name.value
+                        self._calculate_field_cost(field_name, parent_type)
 
-                        # Get the field based on the type and field name
-                        parent_type = self.execution_context.schema.get_type_by_name(
-                            operation_type
-                        )
+            elif isinstance(definition, FragmentDefinitionNode):
+                # For fragments, use the type condition to get the parent type
+                fragment_type_name = definition.type_condition.name.value
+                parent_type = self.execution_context.schema.get_type_by_name(
+                    fragment_type_name
+                )
 
-                        if parent_type:
-                            field = self.execution_context.schema.get_field_for_type(
-                                field_name, parent_type.name
-                            )
+                for selection in definition.selection_set.selections:
+                    if isinstance(selection, FieldNode):
+                        field_name = selection.name.value
+                        self._calculate_field_cost(field_name, parent_type)
 
-                            if field and hasattr(field, "metadata"):
-                                # Get the complexity cost from field metadata or set default to 0
-                                complexity_cost = field.metadata.get(
-                                    "complexity_cost", 0
-                                )
-                                total_cost += complexity_cost
+        yield None
 
-        # Store total cost in context to access later in `get_results`
-        self.execution_context.context["query_cost"] = total_cost
-        yield
+    def _calculate_field_cost(self, field_name: str, parent_type: Any):
+        total_cost = self.execution_context.context.get("query_cost", 0)
+        # Helper method to calculate and add field complexity cost
+        if parent_type:
+            field = self.execution_context.schema.get_field_for_type(
+                field_name, parent_type.name
+            )
+
+            if field and hasattr(field, "metadata"):
+                # Get the complexity cost from field metadata or set default to 0
+                complexity_cost = field.metadata.get("complexity_cost", 0)
+                total_cost += complexity_cost
+                self.execution_context.context["query_cost"] = total_cost
 
 
 # TODO: assign 10 cost to mutations
