@@ -1,4 +1,4 @@
-ARG PYTHON_BASE=3.12.4-slim
+ARG PYTHON_BASE=3.13.0-slim
 # build stage
 FROM python:$PYTHON_BASE AS builder
 
