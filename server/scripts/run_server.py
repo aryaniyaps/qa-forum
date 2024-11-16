@@ -1,5 +1,4 @@
 import uvicorn
-
 from app.config import settings
 from app.logger import build_server_log_config, setup_logging
 
@@ -15,7 +14,6 @@ if __name__ == "__main__":
         factory=True,
         host=settings.host,
         port=settings.port,
-        root_path=settings.root_path,
         server_header=False,
         date_header=False,
         reload=settings.debug,

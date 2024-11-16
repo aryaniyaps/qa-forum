@@ -1,17 +1,23 @@
 {
-    "[python]": {
-      "editor.defaultFormatter": "charliermarsh.ruff"
-    },
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "python.languageServer": "Pylance",
-    "python.analysis.typeCheckingMode": "basic",
-    "python.defaultInterpreterPath": "${workspaceFolder}/server/.venv",
-    "python.testing.pytestEnabled": true,
-    "python.testing.pytestArgs": [""],
-    "python.terminal.activateEnvironment": false,
-    "python.analysis.ignore": ["*"],
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": "explicit"
-    }
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "python.languageServer": "Pylance",
+  "python.analysis.typeCheckingMode": "basic",
+  "python.defaultInterpreterPath": "${workspaceFolder}/server/.venv",
+  "python.testing.pytestEnabled": true,
+  "python.testing.pytestArgs": [""],
+  "python.terminal.activateEnvironment": false,
+  "python.analysis.ignore": ["*"],
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+  "terminal.integrated.env.linux": {
+    "PYTHONPATH": "${workspaceFolder}/server"
+  },
+  "terminal.integrated.env.windows": {
+    "PYTHONPATH": "${workspaceFolder}/server"
   }
+}

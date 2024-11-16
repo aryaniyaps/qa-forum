@@ -2,26 +2,28 @@ ARG PYTHON_BASE=3.12.4-slim
 # build stage
 FROM python:$PYTHON_BASE AS builder
 
-# install PDM
-RUN pip install -U pdm
-# disable update check
-ENV PDM_CHECK_UPDATE=false
+# install UV
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-# copy files
-COPY pyproject.toml pdm.lock ./project/
-COPY ./app ./project/app
-
-# install dependencies and project into the local packages directory
 WORKDIR /project
-RUN pdm install --check --prod --no-editable
 
+# Copy the application files
+COPY . .
+
+# Install dependencies
+RUN uv sync --frozen
 
 # production stage
 FROM python:$PYTHON_BASE
 
 COPY --from=builder /project/.venv/ /project/.venv
+
+# Set environment variables for Python
+ENV PYTHONPATH="/project"
 ENV PATH="/project/.venv/bin:$PATH"
 # set command/entrypoint, adapt to fit your needs
 COPY app ./project/app
+
 WORKDIR /project
-CMD ["python", "app/server.py"]
+
+CMD ["python", "scripts/run_server.py"]

@@ -12,6 +12,7 @@ from graphql import (
     GraphQLError,
     OperationDefinitionNode,
 )
+from strawberry import relay
 from strawberry.extensions import SchemaExtension
 
 
@@ -66,28 +67,26 @@ class QueryCostRateLimitExtension(SchemaExtension):
         for definition in graphql_document.definitions:
             if isinstance(definition, OperationDefinitionNode):
                 # Get root type (e.g., "Query", "Mutation", or "Subscription") for the operation
-                operation_type = definition.operation.name
                 parent_type = self.execution_context.schema.get_type_by_name(
-                    operation_type
+                    definition.operation.name
                 )
 
-                # Process each field in the operation's selection set
-                for selection in definition.selection_set.selections:
-                    if isinstance(selection, FieldNode):
-                        field_name = selection.name.value
-                        self._calculate_field_cost(field_name, parent_type)
+                print("PARENT TYPE: ", parent_type)
 
             elif isinstance(definition, FragmentDefinitionNode):
                 # For fragments, use the type condition to get the parent type
-                fragment_type_name = definition.type_condition.name.value
                 parent_type = self.execution_context.schema.get_type_by_name(
-                    fragment_type_name
+                    definition.type_condition.name.value
                 )
 
-                for selection in definition.selection_set.selections:
-                    if isinstance(selection, FieldNode):
-                        field_name = selection.name.value
-                        self._calculate_field_cost(field_name, parent_type)
+                print("FRAGMENT PARENT TYPE: ", parent_type)
+
+            for selection in definition.selection_set.selections:
+                print("SELECTION: ", selection)
+                print("SELECTION TYPE: ", type(selection))
+                if isinstance(selection, FieldNode):
+                    field_name = selection.name.value
+                    self._calculate_field_cost(field_name, parent_type)
 
         yield None
 
@@ -98,6 +97,8 @@ class QueryCostRateLimitExtension(SchemaExtension):
             field = self.execution_context.schema.get_field_for_type(
                 field_name, parent_type.name
             )
+            print("FIELD TYPE: ", field.type)
+            print("IS CONNECTION: ", issubclass(field.type, relay.Connection))
 
             if field and hasattr(field, "metadata"):
                 # Get the complexity cost from field metadata or set default to 0
