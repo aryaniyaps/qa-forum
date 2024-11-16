@@ -3,6 +3,7 @@
     "editor.defaultFormatter": "charliermarsh.ruff"
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "ruff.nativeServer": true,
   "python.languageServer": "Pylance",
   "python.analysis.typeCheckingMode": "basic",
   "python.defaultInterpreterPath": "${workspaceFolder}/server/.venv",
