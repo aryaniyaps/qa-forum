@@ -21,6 +21,7 @@ dependencies = [
     "opentelemetry-api>=1.28.2",
     "opentelemetry-sdk>=1.28.2",
     "opentelemetry-instrumentation-fastapi>=0.49b2",
+    "opentelemetry-instrumentation-sqlalchemy>=0.49b2",
 ]
 
 

@@ -242,6 +242,7 @@ dependencies = [
     { name = "opentelemetry-api" },
     { name = "opentelemetry-exporter-otlp" },
     { name = "opentelemetry-instrumentation-fastapi" },
+    { name = "opentelemetry-instrumentation-sqlalchemy" },
     { name = "opentelemetry-sdk" },
     { name = "pydantic" },
     { name = "pydantic-settings" },
@@ -279,6 +280,7 @@ requires-dist = [
     { name = "opentelemetry-api", specifier = ">=1.28.2" },
     { name = "opentelemetry-exporter-otlp", specifier = ">=1.28.2" },
     { name = "opentelemetry-instrumentation-fastapi", specifier = ">=0.49b2" },
+    { name = "opentelemetry-instrumentation-sqlalchemy", specifier = ">=0.49b2" },
     { name = "opentelemetry-sdk", specifier = ">=1.28.2" },
     { name = "pydantic", specifier = ">=2.7.4" },
     { name = "pydantic-settings", specifier = ">=2.3.3" },
@@ -593,6 +595,22 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/87/ed/a1275d5aac63edfad0afb012d2d5917412f09ac5f773c86b465b2b0d2549/opentelemetry_instrumentation_fastapi-0.49b2.tar.gz", hash = "sha256:3aa81ed7acf6aa5236d96e90a1218c5e84a9c0dce8fa63bf34ceee6218354b63", size = 19217 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/d3/a9/ef2678c16caf5dc2f84628bfafdbc90139e3c78d9017afd07fbd51b1eeef/opentelemetry_instrumentation_fastapi-0.49b2-py3-none-any.whl", hash = "sha256:c66331d05bf806d7ca4f9579c1db7383aad31a9f6665dbaa2b7c9a4c1e830892", size = 12082 },
+]
+
+[[package]]
+name = "opentelemetry-instrumentation-sqlalchemy"
+version = "0.49b2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "opentelemetry-api" },
+    { name = "opentelemetry-instrumentation" },
+    { name = "opentelemetry-semantic-conventions" },
+    { name = "packaging" },
+    { name = "wrapt" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/62/df/351da8fff041d7277d497b1682763ce43fe61624ed458f21e4f3d449a82c/opentelemetry_instrumentation_sqlalchemy-0.49b2.tar.gz", hash = "sha256:e32f5d37e1fa6efd6b375c67f87d1e4789fe9745cccf692b679de9cccd9910e4", size = 13230 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/72/80/11d8e6c35d4615d367771c91fefe85e9debcd0e2b2004012557743139099/opentelemetry_instrumentation_sqlalchemy-0.49b2-py3-none-any.whl", hash = "sha256:2769e3c8e4e0663c63823361ec7d6393e5c0a8289faec7f477a8e604b043d866", size = 13366 },
 ]
 
 [[package]]

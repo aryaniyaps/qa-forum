@@ -1,3 +1,4 @@
+from opentelemetry.instrumentation.sqlalchemy import SQLAlchemyInstrumentor
 from sqlalchemy.ext.asyncio import (
     create_async_engine,
 )
@@ -11,3 +12,5 @@ database_engine = create_async_engine(
     pool_use_lifo=True,
     pool_pre_ping=True,
 )
+
+SQLAlchemyInstrumentor().instrument(engine=database_engine.sync_engine)
