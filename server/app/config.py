@@ -86,6 +86,9 @@ class Settings(BaseSettings):
 
     persisted_queries_path: Path = Path("query_map.json")
 
+    # OLTP exporter config
+    oltp_exporter_endpoint: str = "http://localhost:4317"
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_prefix="server_",

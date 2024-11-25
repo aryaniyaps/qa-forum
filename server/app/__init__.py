@@ -2,11 +2,18 @@ from aioinject.ext.fastapi import AioInjectMiddleware
 from asgi_correlation_id import CorrelationIdMiddleware
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 
 from app.config import settings
 from app.container import create_container
 from app.graphql_app import create_graphql_router
 from app.middleware import set_fingerprint_middleware
+from app.tracing import setup_tracing
+
+
+def add_instrumentation(app: FastAPI) -> None:
+    """Register instrumentation for the app."""
+    FastAPIInstrumentor.instrument_app(app)
 
 
 def add_routes(app: FastAPI) -> None:
@@ -40,6 +47,9 @@ def add_middleware(app: FastAPI) -> None:
 
 
 def create_app() -> FastAPI:
+    setup_tracing(
+        oltp_exporter_endpoint=settings.oltp_exporter_endpoint,
+    )
     app = FastAPI(
         version="0.0.1",
         debug=settings.debug,
@@ -48,4 +58,5 @@ def create_app() -> FastAPI:
     )
     add_routes(app)
     add_middleware(app)
+    add_instrumentation(app)
     return app
