@@ -220,6 +220,14 @@ EXECUTE FUNCTION log_answer_changes();
      pnpm run relay
      ```
 
+### Running with Tmux/ Tmuxinator
+
+```bash
+sudo apt-get install tmux tmuxinator
+
+tmuxinator start qa_forum
+```
+
 ### Development Workflow
 
 - **Starting the Backend**: Use `pdm dev` to start the FastAPI server.

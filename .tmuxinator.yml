@@ -3,12 +3,12 @@ root: .
 
 windows:
   - server:
-      layout: main-vertical
+      layout: even-horizontal
       panes:
         - cd server && uv run scripts/run_server.py
         - cd server && uv run scripts/run_persist_server.py
   - client:
-      layout: main-vertical
+      layout: even-horizontal
       panes:
         - cd client && pnpm run dev
         - cd client && pnpm run relay
