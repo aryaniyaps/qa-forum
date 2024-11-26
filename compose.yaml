@@ -131,9 +131,9 @@ services:
     image: otel/opentelemetry-collector:0.41.0
     container_name: otel-collector
     restart: always
-    command: "--config=/etc/otel-collector-config.yaml"
+    command: "--config=/etc/otel-collector-config.yml"
     volumes:
-      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml:ro
+      - ./otel-collector-config.yml:/etc/otel-collector-config.yml:ro
     depends_on:
       apm-server:
         condition: service_healthy
