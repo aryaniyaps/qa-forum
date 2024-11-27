@@ -1,6 +1,6 @@
 from opentelemetry import trace
 from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
-from opentelemetry.sdk.resources import Resource
+from opentelemetry.sdk.resources import SERVICE_NAME, SERVICE_VERSION, Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import (
     BatchSpanProcessor,
@@ -8,12 +8,11 @@ from opentelemetry.sdk.trace.export import (
 
 
 def setup_tracing(oltp_exporter_endpoint: str) -> None:
-    print(f"Setting up tracing with OLTP exporter at {oltp_exporter_endpoint}")
     # Define the service name using the Resource object
     resource = Resource.create(
         attributes={
-            "service.name": "qa-server",  # Replace with your desired service name
-            "service.version": "1.0.0",  # Optional: You can add version info
+            SERVICE_NAME: "qa-server",  # Replace with your desired service name
+            SERVICE_VERSION: "1.0.0",  # Optional: You can add version info
         }
     )
 
